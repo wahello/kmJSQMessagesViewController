@@ -100,4 +100,38 @@
     return [UIImage jsq_bubbleImageFromBundleWithName:@"play"];
 }
 
++ (UIImage *)jsq_emotionImage {
+	return [UIImage jsq_bubbleImageFromBundleWithName:@"toolViewEmotion"];
+}
+
++ (UIImage *)jsq_emotionHighligthImage {
+	return [UIImage jsq_bubbleImageFromBundleWithName:@"toolViewEmotionHL"];
+}
+
++ (UIImage *)jsq_inputVoiceImage {
+	return [UIImage jsq_bubbleImageFromBundleWithName:@"toolViewInputVoice"];
+}
+
++ (UIImage *)jsq_inputVoiceHighligthImage {
+	return [UIImage jsq_bubbleImageFromBundleWithName:@"toolViewInputVoiceHL"];
+}
+
++ (UIImage *)jsq_keyboardImage {
+	return [UIImage jsq_bubbleImageFromBundleWithName:@"toolViewKeyboard"];
+}
+
++ (UIImage *)jsq_keyboardHighligthImage {
+	return [UIImage jsq_bubbleImageFromBundleWithName:@"toolViewKeyboardHL"];
+}
+
++ (UIImage *)jsq_moreSelectImage {
+	return [UIImage jsq_bubbleImageFromBundleWithName:@"toolViewSelect"];
+}
+
++ (UIImage *)jsq_moreSelectHightlightImage {
+	return [UIImage jsq_bubbleImageFromBundleWithName:@"toolViewSelectHL"];
+}
+
+
+
 @end

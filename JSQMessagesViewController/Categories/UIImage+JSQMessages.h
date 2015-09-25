@@ -76,4 +76,17 @@
  */
 + (UIImage *)jsq_defaultPlayImage;
 
+
++ (UIImage *)jsq_emotionImage;
+
++ (UIImage *)jsq_emotionHighligthImage;
+
++ (UIImage *)jsq_inputVoiceImage;
+
++ (UIImage *)jsq_inputVoiceHighligthImage;
+
++ (UIImage *)jsq_keyboardImage;
+
++ (UIImage *)jsq_keyboardHighligthImage;
+
 @end
