@@ -41,4 +41,14 @@
  */
 + (UIButton *)defaultSendButtonItem;
 
+
++ (UIButton *)defaultEmotionButtonItem;
+
++ (UIButton*)defaultVoiceButtonItem;
+
++ (UIButton*)defaultKeyboardButtonItem;
+
++ (UIButton*)defaultMoreSelectButtonItem;
+
+
 @end

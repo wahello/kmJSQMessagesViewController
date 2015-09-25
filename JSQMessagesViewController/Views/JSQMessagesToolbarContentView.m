@@ -33,8 +33,12 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 @property (weak, nonatomic) IBOutlet UIView *rightBarButtonContainerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightBarButtonContainerViewWidthConstraint;
 
+@property (weak, nonatomic) IBOutlet UIView *rightBarButtonContainerViewB;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightBarButtonContainerViewBWidthConstraint;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftHorizontalSpacingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightHorizontalSpacingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightHorizontalSpacingConstraintB;
 
 @end
 
@@ -60,7 +64,8 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 
     self.leftHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
     self.rightHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
-
+	self.rightHorizontalSpacingConstraintB.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
+	
     self.backgroundColor = [UIColor clearColor];
 }
 
@@ -71,6 +76,7 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
     _rightBarButtonItem = nil;
     _leftBarButtonContainerView = nil;
     _rightBarButtonContainerView = nil;
+	_rightBarButtonContainerViewB = nil;
 }
 
 #pragma mark - Setters
@@ -160,6 +166,15 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 {
     self.rightHorizontalSpacingConstraint.constant = rightContentPadding;
     [self setNeedsUpdateConstraints];
+}
+
+- (void)setRightBarButtonItemB:(UIButton *)rightBarButtonItemB {
+	if (_rightBarButtonItem) {
+		[_rightBarButtonItemB removeFromSuperview];
+	}
+	if (!rightBarButtonItemB) {
+		_rightBarButtonItemB = nil;
+	}
 }
 
 - (void)setLeftContentPadding:(CGFloat)leftContentPadding

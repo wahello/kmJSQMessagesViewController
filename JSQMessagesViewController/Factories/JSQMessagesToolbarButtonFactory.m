@@ -42,6 +42,66 @@
     return accessoryButton;
 }
 
++ (UIButton *)defaultEmotionButtonItem {
+	UIImage *normalImage = [UIImage jsq_emotionImage];
+	UIImage *highlightedImage = [UIImage jsq_emotionHighligthImage];
+	
+	UIButton *emotionButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, normalImage.size.width, normalImage.size.height)];
+	[emotionButton setImage:normalImage forState:(UIControlStateNormal)];
+	[emotionButton setImage:highlightedImage forState:(UIControlStateHighlighted)];
+	
+	emotionButton.contentMode = UIViewContentModeScaleAspectFit;
+	emotionButton.backgroundColor = [UIColor clearColor];
+	emotionButton.tintColor = [UIColor lightGrayColor];
+	
+	return emotionButton;
+}
+
++ (UIButton*)defaultVoiceButtonItem {
+	UIImage *normalImage = [UIImage jsq_inputVoiceImage];
+	UIImage *highlightedImage = [UIImage jsq_inputVoiceHighligthImage];
+	
+	UIButton *voiceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, normalImage.size.width, normalImage.size.height)];
+	[voiceButton setImage:normalImage forState:(UIControlStateNormal)];
+	[voiceButton setImage:highlightedImage forState:(UIControlStateHighlighted)];
+	
+	voiceButton.contentMode = UIViewContentModeScaleAspectFit;
+	voiceButton.backgroundColor = [UIColor clearColor];
+	voiceButton.tintColor = [UIColor lightGrayColor];
+	
+	return voiceButton;
+}
+
++ (UIButton*)defaultKeyboardButtonItem {
+	UIImage *normalImage = [UIImage jsq_keyboardImage];
+	UIImage *highlightedImage = [UIImage jsq_keyboardHighligthImage];
+	
+	UIButton *keyboarButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, normalImage.size.width, normalImage.size.height)];
+	[keyboarButton setImage:normalImage forState:(UIControlStateNormal)];
+	[keyboarButton setImage:highlightedImage forState:(UIControlStateHighlighted)];
+	
+	keyboarButton.contentMode = UIViewContentModeScaleAspectFit;
+	keyboarButton.backgroundColor = [UIColor clearColor];
+	keyboarButton.tintColor = [UIColor lightGrayColor];
+	
+	return keyboarButton;
+}
+
++ (UIButton*)defaultMoreSelectButtonItem {
+	UIImage *normalImage = [UIImage jsq_keyboardImage];
+	UIImage *highlightedImage = [UIImage jsq_keyboardHighligthImage];
+	
+	UIButton *moreSelectButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, normalImage.size.width, normalImage.size.height)];
+	[moreSelectButton setImage:normalImage forState:(UIControlStateNormal)];
+	[moreSelectButton setImage:highlightedImage forState:(UIControlStateHighlighted)];
+	
+	moreSelectButton.contentMode = UIViewContentModeScaleAspectFit;
+	moreSelectButton.backgroundColor = [UIColor clearColor];
+	moreSelectButton.tintColor = [UIColor lightGrayColor];
+	
+	return moreSelectButton;
+}
+
 + (UIButton *)defaultSendButtonItem
 {
     NSString *sendTitle = [NSBundle jsq_localizedStringForKey:@"send"];

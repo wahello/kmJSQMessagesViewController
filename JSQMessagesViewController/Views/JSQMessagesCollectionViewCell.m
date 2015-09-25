@@ -274,15 +274,15 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 {
     [super setBackgroundColor:backgroundColor];
 
-	self.cellTopLabel.backgroundColor = [UIColor cyanColor];//backgroundColor;
-	self.messageBubbleTopLabel.backgroundColor = [UIColor blueColor];//backgroundColor;
-	self.cellBottomLabel.backgroundColor = [UIColor greenColor];//backgroundColor;
+	self.cellTopLabel.backgroundColor = backgroundColor;
+	self.messageBubbleTopLabel.backgroundColor = backgroundColor;
+	self.cellBottomLabel.backgroundColor = backgroundColor;
 
     self.messageBubbleImageView.backgroundColor = backgroundColor;
     self.avatarImageView.backgroundColor = backgroundColor;
 
-	self.messageBubbleContainerView.backgroundColor = [UIColor orangeColor];//backgroundColor;
-	self.avatarContainerView.backgroundColor = [UIColor redColor];//backgroundColor;
+	self.messageBubbleContainerView.backgroundColor = backgroundColor;
+	self.avatarContainerView.backgroundColor = backgroundColor;
 	
 }
 
