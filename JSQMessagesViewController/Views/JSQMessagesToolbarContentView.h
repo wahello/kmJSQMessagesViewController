@@ -63,7 +63,7 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
  *
  *  @discussion The default value is `8.0f`.
  */
-@property (assign, nonatomic) CGFloat leftContentPadding;
+//@property (assign, nonatomic) CGFloat leftContentPadding;
 
 /**
  *  The container view for the leftBarButtonItem.
@@ -103,7 +103,7 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
  *
  *  @discussion The default value is `8.0f`.
  */
-@property (assign, nonatomic) CGFloat rightContentPadding;
+//@property (assign, nonatomic) CGFloat rightContentPadding;
 
 /**
  *  The container view for the rightBarButtonItem.
