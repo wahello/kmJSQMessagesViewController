@@ -41,7 +41,7 @@ const NSInteger kmMoreSelectButtonTag = 1003;
 @property (weak, nonatomic) IBOutlet UIView *rightBarButtonContainerViewB;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightBarButtonContainerViewBWidthConstraint;
 
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftHorizontalSpacingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftHorizontalSpacingConstraint;
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightHorizontalSpacingConstraint;
 
 @end
@@ -66,8 +66,8 @@ const NSInteger kmMoreSelectButtonTag = 1003;
 
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-//    self.leftHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
-//    self.rightHorizontalSpacingConstraint.constant = 5;
+    self.leftHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
+//    self.rightHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
 	
     self.backgroundColor = [UIColor clearColor];
 }
@@ -102,7 +102,7 @@ const NSInteger kmMoreSelectButtonTag = 1003;
 
     if (!leftBarButtonItem) {
         _leftBarButtonItem = nil;
-//        self.leftHorizontalSpacingConstraint.constant = 0.0f;
+        self.leftHorizontalSpacingConstraint.constant = 0.0f;
         self.leftBarButtonItemWidth = 0.0f;
         self.leftBarButtonContainerView.hidden = YES;
         return;
@@ -113,7 +113,7 @@ const NSInteger kmMoreSelectButtonTag = 1003;
     }
 
     self.leftBarButtonContainerView.hidden = NO;
-//    self.leftHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
+    self.leftHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
     self.leftBarButtonItemWidth = CGRectGetWidth(leftBarButtonItem.frame);
 
     [leftBarButtonItem setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -209,22 +209,9 @@ const NSInteger kmMoreSelectButtonTag = 1003;
 	_rightBarButtonItemB.tag = kmMoreSelectButtonTag;
 }
 
-//- (void)setKeyboarButton:(UIButton *)keyboarButton {
-//	if (_keyboarButton) {
-//		[_keyboarButton removeFromSuperview];
-//	}
-//	if (!keyboarButton) {
-//		_keyboarButton = nil;
-//		return;
-//	}
-//	[self setNeedsUpdateConstraints];
-//	_keyboarButton = keyboarButton;
-//	_keyboarButton.tag = kmKeyboardButtonTag;
-//}
-
 - (void)setLeftContentPadding:(CGFloat)leftContentPadding
 {
-//    self.leftHorizontalSpacingConstraint.constant = leftContentPadding;
+    self.leftHorizontalSpacingConstraint.constant = leftContentPadding;
     [self setNeedsUpdateConstraints];
 }
 
@@ -245,10 +232,10 @@ const NSInteger kmMoreSelectButtonTag = 1003;
 //    return self.rightHorizontalSpacingConstraint.constant;
 //}
 
-//- (CGFloat)leftContentPadding
-//{
-//    return self.leftHorizontalSpacingConstraint.constant;
-//}
+- (CGFloat)leftContentPadding
+{
+    return self.leftHorizontalSpacingConstraint.constant;
+}
 
 #pragma mark - UIView overrides
 
