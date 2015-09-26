@@ -22,6 +22,11 @@
 
 const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 
+const NSInteger kmKeyboardButtonTag = 1000;
+const NSInteger kmVoiceButtonTag = 1001;
+const NSInteger kmEmojiButtonTag = 1002;
+const NSInteger kmMoreSelectButtonTag = 1003;
+
 
 @interface JSQMessagesToolbarContentView ()
 
@@ -70,11 +75,12 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 - (void)dealloc
 {
     _textView = nil;
-    _leftBarButtonItem = nil;
+	_leftBarButtonItem = nil;
     _rightBarButtonItem = nil;
     _leftBarButtonContainerView = nil;
     _rightBarButtonContainerView = nil;
 	_rightBarButtonContainerViewB = nil;
+//	_keyboarButton = nil;
 }
 
 #pragma mark - Setters
@@ -87,6 +93,7 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 	self.rightBarButtonContainerViewB.backgroundColor = backgroundColor;
 }
 
+///*////////////////
 - (void)setLeftBarButtonItem:(UIButton *)leftBarButtonItem
 {
     if (_leftBarButtonItem) {
@@ -116,7 +123,9 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
     [self setNeedsUpdateConstraints];
 
     _leftBarButtonItem = leftBarButtonItem;
+	_leftBarButtonItem.tag = kmVoiceButtonTag;
 }
+////////*/////////
 
 - (void)setLeftBarButtonItemWidth:(CGFloat)leftBarButtonItemWidth
 {
@@ -155,6 +164,7 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
     [self setNeedsUpdateConstraints];
 
     _rightBarButtonItem = rightBarButtonItem;
+	_rightBarButtonItem.tag = kmEmojiButtonTag;
 }
 
 - (void)setRightBarButtonItemWidth:(CGFloat)rightBarButtonItemWidth
@@ -196,7 +206,21 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 	[self setNeedsUpdateConstraints];
 	
 	_rightBarButtonItemB = rightBarButtonItemB;
+	_rightBarButtonItemB.tag = kmMoreSelectButtonTag;
 }
+
+//- (void)setKeyboarButton:(UIButton *)keyboarButton {
+//	if (_keyboarButton) {
+//		[_keyboarButton removeFromSuperview];
+//	}
+//	if (!keyboarButton) {
+//		_keyboarButton = nil;
+//		return;
+//	}
+//	[self setNeedsUpdateConstraints];
+//	_keyboarButton = keyboarButton;
+//	_keyboarButton.tag = kmKeyboardButtonTag;
+//}
 
 - (void)setLeftContentPadding:(CGFloat)leftContentPadding
 {
@@ -233,5 +257,29 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
     [super setNeedsDisplay];
     [self.textView setNeedsDisplay];
 }
+
+- (void)toggleKeyboard:(UIButton*)button {
+	NSInteger ttag = button.tag;
+	
+	BOOL selected = button.selected;
+	_leftBarButtonItem.selected = NO;
+	_rightBarButtonItem.selected = NO;
+	_rightBarButtonItemB.selected = NO;
+	
+	switch (ttag) {
+		case kmVoiceButtonTag: {
+			_leftBarButtonItem.selected = !selected;
+		} break;
+		case kmEmojiButtonTag: {
+			_rightBarButtonItem.selected = !selected;
+		} break;
+		case kmMoreSelectButtonTag: {
+			_rightBarButtonItemB.selected = !selected;
+		} break;
+		default:
+			break;
+	}
+}
+
 
 @end

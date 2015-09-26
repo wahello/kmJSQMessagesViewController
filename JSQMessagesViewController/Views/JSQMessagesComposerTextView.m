@@ -69,7 +69,8 @@
     self.dataDetectorTypes = UIDataDetectorTypeNone;
     self.keyboardAppearance = UIKeyboardAppearanceDefault;
     self.keyboardType = UIKeyboardTypeDefault;
-    self.returnKeyType = UIReturnKeyDefault;
+//    self.returnKeyType = UIReturnKeyDefault;
+	self.returnKeyType = UIReturnKeySend;
     
     self.text = nil;
     

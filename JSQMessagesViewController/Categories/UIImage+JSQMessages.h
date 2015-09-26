@@ -78,15 +78,16 @@
 
 
 + (UIImage *)jsq_emotionImage;
-
 + (UIImage *)jsq_emotionHighligthImage;
 
 + (UIImage *)jsq_inputVoiceImage;
-
 + (UIImage *)jsq_inputVoiceHighligthImage;
 
 + (UIImage *)jsq_keyboardImage;
-
 + (UIImage *)jsq_keyboardHighligthImage;
+
+
++ (UIImage *)jsq_moreSelectImage;
++ (UIImage *)jsq_moreSelectHightlightImage;
 
 @end

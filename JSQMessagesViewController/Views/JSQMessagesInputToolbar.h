@@ -50,6 +50,12 @@
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar
        didPressLeftBarButton:(UIButton *)sender;
 
+- (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar
+	 didPressRightBarButtonB:(UIButton*)sender;
+
+- (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar
+   didPressKeyboardBarButton:(UIButton *)sender;
+
 @end
 
 
@@ -96,7 +102,7 @@
  *  Enables or disables the send button based on whether or not its `textView` has text.
  *  That is, the send button will be enabled if there is text in the `textView`, and disabled otherwise.
  */
-- (void)toggleSendButtonEnabled;
+//- (void)toggleSendButtonEnabled;
 
 /**
  *  Loads the content view for the toolbar.

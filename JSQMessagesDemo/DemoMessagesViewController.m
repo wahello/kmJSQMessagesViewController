@@ -430,7 +430,6 @@
         }
     }
     
-    
     return [self.demoData.avatars objectForKey:message.senderId];
 }
 

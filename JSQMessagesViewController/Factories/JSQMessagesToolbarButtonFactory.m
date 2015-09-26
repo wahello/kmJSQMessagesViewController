@@ -45,10 +45,12 @@
 + (UIButton *)defaultEmotionButtonItem {
 	UIImage *normalImage = [UIImage jsq_emotionImage];
 	UIImage *highlightedImage = [UIImage jsq_emotionHighligthImage];
+	UIImage *selectedImage = [UIImage jsq_keyboardImage];
 	
 	UIButton *emotionButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, normalImage.size.width, normalImage.size.height)];
 	[emotionButton setImage:normalImage forState:(UIControlStateNormal)];
 	[emotionButton setImage:highlightedImage forState:(UIControlStateHighlighted)];
+	[emotionButton setImage:selectedImage forState:(UIControlStateSelected)];
 	
 	emotionButton.contentMode = UIViewContentModeScaleAspectFit;
 	emotionButton.backgroundColor = [UIColor clearColor];
@@ -60,10 +62,12 @@
 + (UIButton*)defaultVoiceButtonItem {
 	UIImage *normalImage = [UIImage jsq_inputVoiceImage];
 	UIImage *highlightedImage = [UIImage jsq_inputVoiceHighligthImage];
+	UIImage *selectedImage = [UIImage jsq_keyboardImage];
 	
 	UIButton *voiceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, normalImage.size.width, normalImage.size.height)];
 	[voiceButton setImage:normalImage forState:(UIControlStateNormal)];
 	[voiceButton setImage:highlightedImage forState:(UIControlStateHighlighted)];
+	[voiceButton setImage:selectedImage forState:(UIControlStateSelected)];
 	
 	voiceButton.contentMode = UIViewContentModeScaleAspectFit;
 	voiceButton.backgroundColor = [UIColor clearColor];
@@ -88,12 +92,14 @@
 }
 
 + (UIButton*)defaultMoreSelectButtonItem {
-	UIImage *normalImage = [UIImage jsq_keyboardImage];
-	UIImage *highlightedImage = [UIImage jsq_keyboardHighligthImage];
+	UIImage *normalImage = [UIImage jsq_moreSelectImage];
+	UIImage *highlightedImage = [UIImage jsq_moreSelectHightlightImage];
+	UIImage *selectedImage = [UIImage jsq_keyboardImage];
 	
 	UIButton *moreSelectButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, normalImage.size.width, normalImage.size.height)];
 	[moreSelectButton setImage:normalImage forState:(UIControlStateNormal)];
 	[moreSelectButton setImage:highlightedImage forState:(UIControlStateHighlighted)];
+	[moreSelectButton setImage:selectedImage forState:(UIControlStateSelected)];
 	
 	moreSelectButton.contentMode = UIViewContentModeScaleAspectFit;
 	moreSelectButton.backgroundColor = [UIColor clearColor];

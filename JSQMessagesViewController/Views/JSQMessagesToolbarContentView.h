@@ -89,6 +89,8 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
 
 @property (weak, nonatomic) UIButton *rightBarButtonItemB;
 
+//@property (weak, nonatomic) UIButton *keyboarButton;
+
 /**
  *  Specifies the width of the rightBarButtonItem.
  *
@@ -126,5 +128,8 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
  *  initialization or the nib file could not be located.
  */
 + (UINib *)nib;
+
+- (void)toggleKeyboard:(UIButton*)button;
+
 
 @end
