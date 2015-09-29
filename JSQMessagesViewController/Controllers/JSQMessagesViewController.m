@@ -665,25 +665,41 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 #pragma mark - Input toolbar delegate
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressLeftBarButton:(UIButton *)sender
+				inputBarState:(InputToolBarContentViewState)istate
 {
-	NSLog(@" ---- ==== voice input ");
-	
+	BOOL showKeyboard = istate == InputToolBarContentViewStateText;
+	NSLog(@" ---- ==== voice input kb showed:%@", showKeyboard?@"yes":@"no");
+	if (showKeyboard) {
+		[toolbar.contentView.textView becomeFirstResponder];
+	} else {
+		[toolbar.contentView.textView resignFirstResponder];
+	}
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender
+			   inputBarState:(InputToolBarContentViewState)istate
 {
-	NSLog(@"------ === emoji input view");
-	
+	BOOL showKeyboard = istate == InputToolBarContentViewStateText;
+	NSLog(@"------ === emoji input view kb showed:%@", showKeyboard?@"yes":@"no");
+	if (showKeyboard) {
+		[toolbar.contentView.textView becomeFirstResponder];
+	} else {
+		[toolbar.contentView.textView resignFirstResponder];
+	}
 }
 
-- (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButtonB:(UIButton *)sender {
-	NSLog(@"------- === more select ");
-	
+- (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButtonB:(UIButton *)sender
+			   inputBarState:(InputToolBarContentViewState)istate
+{
+	BOOL showKeyboard = istate == InputToolBarContentViewStateText;
+	NSLog(@"------- === more select kb showed:%@", showKeyboard?@"yes":@"no");
+	if (showKeyboard) {
+		[toolbar.contentView.textView becomeFirstResponder];
+	} else {
+		[toolbar.contentView.textView resignFirstResponder];
+	}
 }
 
-- (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressKeyboardBarButton:(UIButton *)sender {
-	NSLog(@"------- === key board");
-}
 
 - (NSString *)jsq_currentlyComposedMessageText
 {
@@ -696,6 +712,13 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 #pragma mark - Text view delegate
 
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+	if (textView == self.inputToolbar.contentView.textView) {
+		[self.inputToolbar.contentView toggleKeyboard:nil];
+	}
+	return YES;
+}
+
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     if (textView != self.inputToolbar.contentView.textView) {
@@ -703,7 +726,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     }
 
     [textView becomeFirstResponder];
-
+	
     if (self.automaticallyScrollsToMostRecentMessage) {
         [self scrollToBottomAnimated:YES];
     }
@@ -727,7 +750,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 	if ([text isEqualToString:@"\n"]) {
 		[self didPressSendButton:nil
-				 withMessageText:textView.text //[self jsq_currentlyComposedMessageText];
+				 withMessageText://textView.text
+								[self jsq_currentlyComposedMessageText]
 						senderId:self.senderId
 			   senderDisplayName:self.senderDisplayName
 							date:[NSDate date]];
@@ -812,11 +836,17 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     if (![self.inputToolbar.contentView.textView isFirstResponder] && self.toolbarBottomLayoutGuide.constant == 0.0f) {
         return;
     }
-
+	
+	if (self.inputToolbar.contentView.inputToolState == InputToolBarContentViewStateMore
+		|| self.inputToolbar.contentView.inputToolState == InputToolBarContentViewStateEmoji) {
+		[self jsq_setToolbarBottomLayoutGuideConstant:216];
+		
+		return;
+	}
     CGFloat heightFromBottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(keyboardFrame);
 
     heightFromBottom = MAX(0.0f, heightFromBottom);
-
+	NSLog(@"heightFromBottom : %f ", heightFromBottom);
     [self jsq_setToolbarBottomLayoutGuideConstant:heightFromBottom];
 }
 

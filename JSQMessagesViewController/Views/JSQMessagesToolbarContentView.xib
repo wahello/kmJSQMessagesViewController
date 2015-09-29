@@ -38,39 +38,34 @@
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dm4-NT-mvr" customClass="JSQMessagesComposerTextView">
                     <rect key="frame" x="50" y="7" width="185" height="30"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="185" id="6XM-bB-ul3"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="dm4-NT-mvr" firstAttribute="centerY" secondItem="Myo-1S-Vg1" secondAttribute="centerY" id="2pT-Ok-7jC"/>
-                <constraint firstItem="LEq-G7-jGt" firstAttribute="top" secondItem="1" secondAttribute="top" constant="5" id="2zg-ve-gyu"/>
+                <constraint firstItem="dm4-NT-mvr" firstAttribute="leading" secondItem="LEq-G7-jGt" secondAttribute="trailing" constant="8" symbolic="YES" id="6H0-yw-QO2"/>
                 <constraint firstAttribute="trailing" secondItem="wYG-F6-916" secondAttribute="trailing" constant="7" id="DET-Qt-hiC"/>
-                <constraint firstItem="dm4-NT-mvr" firstAttribute="leading" secondItem="LEq-G7-jGt" secondAttribute="trailing" constant="8" symbolic="YES" id="Gc8-xv-COY"/>
                 <constraint firstItem="LEq-G7-jGt" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="5" id="LGo-32-2hp"/>
-                <constraint firstItem="Myo-1S-Vg1" firstAttribute="leading" secondItem="dm4-NT-mvr" secondAttribute="trailing" constant="5" id="PGd-by-UmH"/>
-                <constraint firstItem="dm4-NT-mvr" firstAttribute="top" secondItem="1" secondAttribute="top" constant="7" id="S2g-Rd-maI"/>
-                <constraint firstItem="LEq-G7-jGt" firstAttribute="centerY" secondItem="dm4-NT-mvr" secondAttribute="centerY" id="Ysh-KN-xIL"/>
-                <constraint firstItem="Myo-1S-Vg1" firstAttribute="top" secondItem="LEq-G7-jGt" secondAttribute="top" id="az3-R4-0DP"/>
+                <constraint firstAttribute="bottom" secondItem="LEq-G7-jGt" secondAttribute="bottom" constant="5" id="Pvh-67-XZE"/>
                 <constraint firstItem="Myo-1S-Vg1" firstAttribute="top" secondItem="wYG-F6-916" secondAttribute="top" id="cNw-kS-OJ1"/>
                 <constraint firstItem="Myo-1S-Vg1" firstAttribute="bottom" secondItem="wYG-F6-916" secondAttribute="bottom" id="dlw-gl-PSw"/>
+                <constraint firstAttribute="bottom" secondItem="Myo-1S-Vg1" secondAttribute="bottom" constant="5" id="fTb-5h-wee"/>
+                <constraint firstAttribute="bottom" secondItem="dm4-NT-mvr" secondAttribute="bottom" constant="7" id="iGB-oW-wlh"/>
+                <constraint firstItem="Myo-1S-Vg1" firstAttribute="leading" secondItem="dm4-NT-mvr" secondAttribute="trailing" constant="5" id="lge-7L-4qF"/>
                 <constraint firstItem="wYG-F6-916" firstAttribute="leading" secondItem="Myo-1S-Vg1" secondAttribute="trailing" constant="5" id="qZG-h4-RPs"/>
-                <constraint firstItem="wYG-F6-916" firstAttribute="centerY" secondItem="1" secondAttribute="centerY" id="vxC-Ox-sre"/>
+                <constraint firstItem="dm4-NT-mvr" firstAttribute="top" secondItem="1" secondAttribute="top" constant="7" id="vcP-70-9Wt"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="leftBarButtonContainerView" destination="LEq-G7-jGt" id="F0V-4N-1Mo"/>
-                <outlet property="leftBarButtonContainerViewWidthConstraint" destination="qnQ-qa-97A" id="x85-YF-DgL"/>
+                <outlet property="leftBarButtonContainerViewWidthConstraint" destination="Y4m-s0-xPs" id="Vzd-d6-uKe"/>
                 <outlet property="leftHorizontalSpacingConstraint" destination="LGo-32-2hp" id="zxK-3r-xCJ"/>
                 <outlet property="rightBarButtonContainerView" destination="Myo-1S-Vg1" id="0SR-cw-EkD"/>
                 <outlet property="rightBarButtonContainerViewB" destination="wYG-F6-916" id="CoA-A7-bDM"/>
-                <outlet property="rightBarButtonContainerViewBWidthConstraint" destination="gDh-MA-zlS" id="jaM-XA-PYn"/>
-                <outlet property="rightBarButtonContainerViewWidthConstraint" destination="Ti7-NR-ww2" id="XH0-l6-9T1"/>
+                <outlet property="rightBarButtonContainerViewBWidthConstraint" destination="gDh-MA-zlS" id="wfE-OO-qQ4"/>
+                <outlet property="rightBarButtonContainerViewWidthConstraint" destination="Ti7-NR-ww2" id="uPP-VQ-YwN"/>
                 <outlet property="textView" destination="dm4-NT-mvr" id="PFw-HO-oT8"/>
             </connections>
             <point key="canvasLocation" x="268" y="548"/>

@@ -68,6 +68,7 @@ const NSInteger kmMoreSelectButtonTag = 1003;
 
     self.leftHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
 //    self.rightHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
+	self.inputToolState = InputToolBarContentViewStateNone;
 	
     self.backgroundColor = [UIColor clearColor];
 }
@@ -245,27 +246,37 @@ const NSInteger kmMoreSelectButtonTag = 1003;
     [self.textView setNeedsDisplay];
 }
 
-- (void)toggleKeyboard:(UIButton*)button {
-	NSInteger ttag = button.tag;
+- (InputToolBarContentViewState)toggleKeyboard:(UIButton*)button {
+	NSInteger ttag = (nil == button)? 0 : button.tag;
 	
-	BOOL selected = button.selected;
+	BOOL selected = (nil == button)?NO : button.selected;
 	_leftBarButtonItem.selected = NO;
 	_rightBarButtonItem.selected = NO;
 	_rightBarButtonItemB.selected = NO;
+	InputToolBarContentViewState res = (nil == button)?InputToolBarContentViewStateText:InputToolBarContentViewStateNone;
 	
 	switch (ttag) {
 		case kmVoiceButtonTag: {
+			if (!selected) { res = InputToolBarContentViewStateVoice; }
+			else { res = InputToolBarContentViewStateText; }
 			_leftBarButtonItem.selected = !selected;
+			
 		} break;
 		case kmEmojiButtonTag: {
+			if (!selected) {	res = InputToolBarContentViewStateEmoji; }
+			else { res = InputToolBarContentViewStateText; }
 			_rightBarButtonItem.selected = !selected;
 		} break;
 		case kmMoreSelectButtonTag: {
+			if (!selected) { res = InputToolBarContentViewStateMore; }
+			else { res = InputToolBarContentViewStateText; }
 			_rightBarButtonItemB.selected = !selected;
 		} break;
 		default:
 			break;
 	}
+	_inputToolState = res;
+	return res;
 }
 
 

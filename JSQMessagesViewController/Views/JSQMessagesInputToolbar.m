@@ -70,7 +70,7 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 
     [self jsq_addObservers];
 	
-	self.contentView.leftBarButtonItem = [JSQMessagesToolbarButtonFactory defaultVoiceButtonItem];
+	self.contentView.leftBarButtonItem = nil;//[JSQMessagesToolbarButtonFactory defaultVoiceButtonItem];
 	self.contentView.rightBarButtonItem = [JSQMessagesToolbarButtonFactory defaultEmotionButtonItem];
 	self.contentView.rightBarButtonItemB = [JSQMessagesToolbarButtonFactory defaultMoreSelectButtonItem];
 	
@@ -102,20 +102,20 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 
 - (void)jsq_leftBarButtonPressed:(UIButton *)sender
 {
-	[self.contentView toggleKeyboard:sender];
-    [self.delegate messagesInputToolbar:self didPressLeftBarButton:sender];
+	InputToolBarContentViewState slctd = [self.contentView toggleKeyboard:sender];
+    [self.delegate messagesInputToolbar:self didPressLeftBarButton:sender inputBarState:slctd];
 }
 
 - (void)jsq_rightBarButtonPressed:(UIButton *)sender
 {
-	[self.contentView toggleKeyboard:sender];
-    [self.delegate messagesInputToolbar:self didPressRightBarButton:sender];
+	InputToolBarContentViewState slctd = [self.contentView toggleKeyboard:sender];
+    [self.delegate messagesInputToolbar:self didPressRightBarButton:sender inputBarState:slctd];
 }
 
 - (void)jsq_rightBarButtonBPressed:(UIButton *)sender
 {
-	[self.contentView toggleKeyboard:sender];
-	[self.delegate messagesInputToolbar:self didPressRightBarButtonB:sender];
+	InputToolBarContentViewState slctd = [self.contentView toggleKeyboard:sender];
+	[self.delegate messagesInputToolbar:self didPressRightBarButtonB:sender inputBarState:slctd];
 }
 
 #pragma mark - Key-value observing

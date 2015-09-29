@@ -34,6 +34,12 @@
  */
 - (BOOL)composerTextView:(JSQMessagesComposerTextView *)textView shouldPasteWithSender:(id)sender;
 
+- (BOOL)composerTextViewDidBeginEditing:(JSQMessagesComposerTextView *)textView;
+
+- (BOOL)composerTextViewDidEndEditing:(JSQMessagesComposerTextView *)textView;
+
+
+
 @end
 
 /**
