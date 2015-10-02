@@ -29,6 +29,9 @@
 NSString * const JSQMessagesKeyboardControllerNotificationKeyboardDidChangeFrame = @"JSQMessagesKeyboardControllerNotificationKeyboardDidChangeFrame";
 NSString * const JSQMessagesKeyboardControllerUserInfoKeyKeyboardDidChangeFrame = @"JSQMessagesKeyboardControllerUserInfoKeyKeyboardDidChangeFrame";
 
+NSString * const kmCustomInputviewDidShow = @"kmCustomInputviewDidShow";
+NSString * const kmCustomInputviewDidHide = @"kmCustomInputviewDidHide";
+
 static void * kJSQMessagesKeyboardControllerKeyValueObservingContext = &kJSQMessagesKeyboardControllerKeyValueObservingContext;
 
 typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
@@ -180,9 +183,56 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
                                                object:nil];
 }
 
+//--added keyeMyria
+- (void)km_registerForCustomNotifications
+{
+	[self km_unregisterForCustomNotifications];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(km_didReceiveCustomInputViewDidShowNotification:)
+												 name:kmCustomInputviewDidShow object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(km_didReceiveCustomInputViewDidHideNotification:)
+												 name:kmCustomInputviewDidHide object:nil];
+	
+}
+
+- (void)km_unregisterForCustomNotifications
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)km_didReceiveCustomInputViewDidShowNotification:(NSNotification*)notification {
+	[self.panGestureRecognizer addTarget:self action:@selector(km_handlePanGestureRecognizer:)];
+}
+
+- (void)km_didReceiveCustomInputViewDidHideNotification:(NSNotification*)notification {
+	[self.panGestureRecognizer removeTarget:self action:@selector(km_handlePanGestureRecognizer:)];
+}
+
 - (void)jsq_unregisterForNotifications
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)km_handlePanGestureRecognizer:(UIPanGestureRecognizer*)pan {
+	
+	switch (pan.state) {
+		case UIGestureRecognizerStateChanged: {
+			
+		}
+			break;
+		case UIGestureRecognizerStateEnded:
+		case UIGestureRecognizerStateCancelled:
+		case UIGestureRecognizerStateFailed: {
+			
+		}
+			break;
+		default:
+			break;
+	}
+	
 }
 
 - (void)jsq_didReceiveKeyboardDidShowNotification:(NSNotification *)notification
@@ -212,7 +262,7 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
     self.keyboardView = nil;
 
     [self jsq_handleKeyboardNotification:notification completion:^(BOOL finished) {
-        [self.panGestureRecognizer removeTarget:self action:NULL];
+        [self.panGestureRecognizer removeTarget:self action:@selector(jsq_handlePanGestureRecognizer:)];
     }];
 }
 

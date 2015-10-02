@@ -39,6 +39,8 @@ FOUNDATION_EXPORT NSString * const JSQMessagesKeyboardControllerNotificationKeyb
  */
 FOUNDATION_EXPORT NSString * const JSQMessagesKeyboardControllerUserInfoKeyKeyboardDidChangeFrame;
 
+FOUNDATION_EXPORT NSString *const kmCustomInputviewDidShow;
+FOUNDATION_EXPORT NSString *const kmCustomInputviewDidHide;
 
 /**
  *  The `JSQMessagesKeyboardControllerDelegate` protocol defines methods that 

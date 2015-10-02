@@ -41,6 +41,7 @@
 #import "UIDevice+JSQMessages.h"
 #import "NSBundle+JSQMessages.h"
 
+#import "Masonry.h"
 
 static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObservingContext;
 
@@ -64,6 +65,11 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 @property (weak, nonatomic) UIGestureRecognizer *currentInteractivePopGestureRecognizer;
 
 @property (assign, nonatomic) BOOL textViewWasFirstResponderDuringInteractivePop;
+
+///--
+@property (strong, nonatomic) UIView *containView4CustomInput;
+
+
 
 - (void)jsq_configureMessagesViewController;
 
@@ -158,6 +164,21 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
                                                                      panGestureRecognizer:self.collectionView.panGestureRecognizer
                                                                                  delegate:self];
     }
+	
+	[self configureCustomView];
+}
+
+- (void)configureCustomView {
+	
+	UIView *cv = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.inputToolbar.frame), CGRectGetWidth(self.view.frame), 216)];
+	[self.view addSubview:cv];
+	[cv mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.top.equalTo(_inputToolbar.mas_bottom);
+		make.width.equalTo(self.view.mas_width);
+		
+		make.height.equalTo(@216);
+	}];
+	_containView4CustomInput = cv;
 }
 
 - (void)dealloc
@@ -183,6 +204,11 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
     [_keyboardController endListeningForKeyboard];
     _keyboardController = nil;
+	
+	//--
+	_containView4CustomInput = nil;
+	
+	
 }
 
 #pragma mark - Setters
@@ -673,7 +699,10 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
 		[toolbar.contentView.textView resignFirstResponder];
+		[self jsq_setToolbarBottomLayoutGuideConstant:216];
+		[self scrollToBottomAnimated:YES];
 	}
+	[self postCustomWillShowOrHide:!showKeyboard];
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender
@@ -685,7 +714,10 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
 		[toolbar.contentView.textView resignFirstResponder];
+		[self jsq_setToolbarBottomLayoutGuideConstant:216];
+		[self scrollToBottomAnimated:YES];
 	}
+	[self postCustomWillShowOrHide:!showKeyboard];
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButtonB:(UIButton *)sender
@@ -697,9 +729,19 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
 		[toolbar.contentView.textView resignFirstResponder];
+		[self jsq_setToolbarBottomLayoutGuideConstant:216];
+		[self scrollToBottomAnimated:YES];
 	}
+	[self postCustomWillShowOrHide:!showKeyboard];
 }
 
+- (void)postCustomWillShowOrHide:(BOOL)showOrHide {
+	if (showOrHide) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:kmCustomInputviewDidShow object:nil];
+	} else {
+		[[NSNotificationCenter defaultCenter] postNotificationName:kmCustomInputviewDidHide object:nil];
+	}
+}
 
 - (NSString *)jsq_currentlyComposedMessageText
 {
