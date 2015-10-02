@@ -228,11 +228,6 @@ const NSInteger kmMoreSelectButtonTag = 1003;
     return self.rightBarButtonContainerViewWidthConstraint.constant;
 }
 
-//- (CGFloat)rightContentPadding
-//{
-//    return self.rightHorizontalSpacingConstraint.constant;
-//}
-
 - (CGFloat)leftContentPadding
 {
     return self.leftHorizontalSpacingConstraint.constant;
@@ -257,19 +252,31 @@ const NSInteger kmMoreSelectButtonTag = 1003;
 	
 	switch (ttag) {
 		case kmVoiceButtonTag: {
-			if (!selected) { res = InputToolBarContentViewStateVoice; }
-			else { res = InputToolBarContentViewStateText; }
+			if (!selected) {
+				res = InputToolBarContentViewStateVoice;
+			}
+			else {
+				res = InputToolBarContentViewStateText;
+			}
 			_leftBarButtonItem.selected = !selected;
 			
 		} break;
 		case kmEmojiButtonTag: {
-			if (!selected) {	res = InputToolBarContentViewStateEmoji; }
-			else { res = InputToolBarContentViewStateText; }
+			if (!selected) {
+				res = InputToolBarContentViewStateEmoji;
+			}
+			else {
+				res = InputToolBarContentViewStateText;
+			}
 			_rightBarButtonItem.selected = !selected;
 		} break;
 		case kmMoreSelectButtonTag: {
-			if (!selected) { res = InputToolBarContentViewStateMore; }
-			else { res = InputToolBarContentViewStateText; }
+			if (!selected) {
+				res = InputToolBarContentViewStateMore;
+			}
+			else {
+				res = InputToolBarContentViewStateText;
+			}
 			_rightBarButtonItemB.selected = !selected;
 		} break;
 		default:

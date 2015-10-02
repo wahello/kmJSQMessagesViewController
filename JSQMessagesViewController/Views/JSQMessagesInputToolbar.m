@@ -70,7 +70,7 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 
     [self jsq_addObservers];
 	
-	self.contentView.leftBarButtonItem = nil;//[JSQMessagesToolbarButtonFactory defaultVoiceButtonItem];
+	self.contentView.leftBarButtonItem = [JSQMessagesToolbarButtonFactory defaultVoiceButtonItem];
 	self.contentView.rightBarButtonItem = [JSQMessagesToolbarButtonFactory defaultEmotionButtonItem];
 	self.contentView.rightBarButtonItemB = [JSQMessagesToolbarButtonFactory defaultMoreSelectButtonItem];
 	
@@ -96,6 +96,14 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 {
     NSParameterAssert(preferredDefaultHeight > 0.0f);
     _preferredDefaultHeight = preferredDefaultHeight;
+}
+
+- (void)setAllowVoiceInput:(BOOL)allowVoiceInput {
+	if (!allowVoiceInput) {
+		[self.contentView removeObserver:self forKeyPath:NSStringFromSelector(@selector(leftBarButtonItem)) context:kJSQMessagesInputToolbarKeyValueObservingContext];
+		self.contentView.leftBarButtonItem = nil;
+	}
+	_allowVoiceInput = allowVoiceInput;
 }
 
 #pragma mark - Actions
@@ -144,7 +152,8 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
                 [self.contentView.rightBarButtonItem addTarget:self
                                                         action:@selector(jsq_rightBarButtonPressed:)
                                               forControlEvents:UIControlEventTouchUpInside];
-			} else if ([keyPath isEqualToString:NSStringFromSelector(@selector(rightBarButtonItemB))]) {
+			}
+			else if ([keyPath isEqualToString:NSStringFromSelector(@selector(rightBarButtonItemB))]) {
 				
 				[self.contentView.rightBarButtonItemB removeTarget:self
 															action:NULL

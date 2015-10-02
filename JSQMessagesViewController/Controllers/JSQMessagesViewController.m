@@ -172,13 +172,17 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 	
 	UIView *cv = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.inputToolbar.frame), CGRectGetWidth(self.view.frame), 216)];
 	[self.view addSubview:cv];
+	[self.view bringSubviewToFront:cv];
 	[cv mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.top.equalTo(_inputToolbar.mas_bottom);
 		make.width.equalTo(self.view.mas_width);
+		make.bottom.equalTo(self.view.mas_bottom);
 		
-		make.height.equalTo(@216);
 	}];
+	cv.backgroundColor = [UIColor greenColor];
 	_containView4CustomInput = cv;
+	
+	
 }
 
 - (void)dealloc
@@ -207,7 +211,6 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 	
 	//--
 	_containView4CustomInput = nil;
-	
 	
 }
 
@@ -241,6 +244,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     _topContentAdditionalInset = topContentAdditionalInset;
     [self jsq_updateCollectionViewInsets];
 }
+
+
 
 #pragma mark - View lifecycle
 
@@ -699,7 +704,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
 		[toolbar.contentView.textView resignFirstResponder];
-		[self jsq_setToolbarBottomLayoutGuideConstant:216];
+		[UIView animateWithDuration:0.4 animations:^{
+			[self jsq_setToolbarBottomLayoutGuideConstant:216];
+		}];
 		[self scrollToBottomAnimated:YES];
 	}
 	[self postCustomWillShowOrHide:!showKeyboard];
@@ -714,7 +721,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
 		[toolbar.contentView.textView resignFirstResponder];
-		[self jsq_setToolbarBottomLayoutGuideConstant:216];
+		[UIView animateWithDuration:0.4 animations:^{
+			[self jsq_setToolbarBottomLayoutGuideConstant:216];
+		}];
 		[self scrollToBottomAnimated:YES];
 	}
 	[self postCustomWillShowOrHide:!showKeyboard];
@@ -729,7 +738,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
 		[toolbar.contentView.textView resignFirstResponder];
-		[self jsq_setToolbarBottomLayoutGuideConstant:216];
+		[UIView animateWithDuration:0.4 animations:^{
+			[self jsq_setToolbarBottomLayoutGuideConstant:216];
+		}];
 		[self scrollToBottomAnimated:YES];
 	}
 	[self postCustomWillShowOrHide:!showKeyboard];
@@ -792,8 +803,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 	if ([text isEqualToString:@"\n"]) {
 		[self didPressSendButton:nil
-				 withMessageText://textView.text
-								[self jsq_currentlyComposedMessageText]
+				 withMessageText:textView.text
+	//							[self jsq_currentlyComposedMessageText]
 						senderId:self.senderId
 			   senderDisplayName:self.senderDisplayName
 							date:[NSDate date]];
@@ -880,15 +891,13 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     }
 	
 	if (self.inputToolbar.contentView.inputToolState == InputToolBarContentViewStateMore
-		|| self.inputToolbar.contentView.inputToolState == InputToolBarContentViewStateEmoji) {
-		[self jsq_setToolbarBottomLayoutGuideConstant:216];
-		
+		|| self.inputToolbar.contentView.inputToolState == InputToolBarContentViewStateEmoji
+		|| self.inputToolbar.contentView.inputToolState == InputToolBarContentViewStateVoice) {
 		return;
 	}
     CGFloat heightFromBottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(keyboardFrame);
 
     heightFromBottom = MAX(0.0f, heightFromBottom);
-	NSLog(@"heightFromBottom : %f ", heightFromBottom);
     [self jsq_setToolbarBottomLayoutGuideConstant:heightFromBottom];
 }
 

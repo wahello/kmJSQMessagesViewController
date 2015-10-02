@@ -93,6 +93,7 @@
      *
      *  self.inputToolbar.maximumHeight = 150;
      */
+	self.inputToolbar.allowVoiceInput = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -172,6 +172,8 @@
  */
 @property (assign, nonatomic) CGFloat topContentAdditionalInset;
 
+@property (assign, nonatomic) BOOL allowVoiceInput;
+
 #pragma mark - Class methods
 
 /**

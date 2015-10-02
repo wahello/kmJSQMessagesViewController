@@ -95,6 +95,8 @@
  */
 @property (assign, nonatomic) NSUInteger maximumHeight;
 
+@property (assign, nonatomic) BOOL allowVoiceInput;
+
 /**
  *  Enables or disables the send button based on whether or not its `textView` has text.
  *  That is, the send button will be enabled if there is text in the `textView`, and disabled otherwise.
