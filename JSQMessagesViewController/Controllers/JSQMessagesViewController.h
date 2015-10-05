@@ -172,7 +172,11 @@
  */
 @property (assign, nonatomic) CGFloat topContentAdditionalInset;
 
-@property (assign, nonatomic) BOOL allowVoiceInput;
+
+//@property (strong, nonatomic) NSString *emojiPlistDir;
+
+@property (strong, nonatomic) NSString *classicEmojiDir;
+
 
 #pragma mark - Class methods
 

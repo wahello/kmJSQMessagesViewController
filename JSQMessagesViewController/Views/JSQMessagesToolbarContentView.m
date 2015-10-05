@@ -68,7 +68,7 @@ const NSInteger kmMoreSelectButtonTag = 1003;
 
     self.leftHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
 //    self.rightHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
-	self.inputToolState = InputToolBarContentViewStateNone;
+	self.inputToolState = kmInputToolBarContentViewStateNone;
 	
     self.backgroundColor = [UIColor clearColor];
 }
@@ -241,41 +241,41 @@ const NSInteger kmMoreSelectButtonTag = 1003;
     [self.textView setNeedsDisplay];
 }
 
-- (InputToolBarContentViewState)toggleKeyboard:(UIButton*)button {
+- (kmInputToolBarContentViewState)toggleKeyboard:(UIButton*)button {
 	NSInteger ttag = (nil == button)? 0 : button.tag;
 	
 	BOOL selected = (nil == button)?NO : button.selected;
 	_leftBarButtonItem.selected = NO;
 	_rightBarButtonItem.selected = NO;
 	_rightBarButtonItemB.selected = NO;
-	InputToolBarContentViewState res = (nil == button)?InputToolBarContentViewStateText:InputToolBarContentViewStateNone;
+	kmInputToolBarContentViewState res = (nil == button)?kmInputToolBarContentViewStateText:kmInputToolBarContentViewStateNone;
 	
 	switch (ttag) {
 		case kmVoiceButtonTag: {
 			if (!selected) {
-				res = InputToolBarContentViewStateVoice;
+				res = kmInputToolBarContentViewStateVoice;
 			}
 			else {
-				res = InputToolBarContentViewStateText;
+				res = kmInputToolBarContentViewStateText;
 			}
 			_leftBarButtonItem.selected = !selected;
 			
 		} break;
 		case kmEmojiButtonTag: {
 			if (!selected) {
-				res = InputToolBarContentViewStateEmoji;
+				res = kmInputToolBarContentViewStateEmoji;
 			}
 			else {
-				res = InputToolBarContentViewStateText;
+				res = kmInputToolBarContentViewStateText;
 			}
 			_rightBarButtonItem.selected = !selected;
 		} break;
 		case kmMoreSelectButtonTag: {
 			if (!selected) {
-				res = InputToolBarContentViewStateMore;
+				res = kmInputToolBarContentViewStateMore;
 			}
 			else {
-				res = InputToolBarContentViewStateText;
+				res = kmInputToolBarContentViewStateText;
 			}
 			_rightBarButtonItemB.selected = !selected;
 		} break;

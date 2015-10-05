@@ -42,10 +42,14 @@
 #import "NSBundle+JSQMessages.h"
 
 #import "Masonry.h"
+#import "kmMessageEmojiManager.h"
+#import "kmMessageMoreSelector.h"
+#import "kmVoiceInput.h"
+
 
 static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObservingContext;
 
-
+static CGFloat kmInputViewHeight = 216;
 
 @interface JSQMessagesViewController () <JSQMessagesInputToolbarDelegate,
                                          JSQMessagesKeyboardControllerDelegate>
@@ -67,8 +71,11 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 @property (assign, nonatomic) BOOL textViewWasFirstResponderDuringInteractivePop;
 
 ///--
-@property (strong, nonatomic) UIView *containView4CustomInput;
+@property (weak, nonatomic) UIView *containView4CustomInput;
 
+@property (weak, nonatomic) kmMessageEmojiManager *emojiManager;
+@property (weak, nonatomic) kmMessageMoreSelector *moreSelector;
+@property (weak, nonatomic) kmVoiceInput *voiceInput;
 
 
 - (void)jsq_configureMessagesViewController;
@@ -170,7 +177,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 - (void)configureCustomView {
 	
-	UIView *cv = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.inputToolbar.frame), CGRectGetWidth(self.view.frame), 216)];
+	UIView *cv = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.inputToolbar.frame), CGRectGetWidth(self.view.frame), kmInputViewHeight)];
 	[self.view addSubview:cv];
 	[self.view bringSubviewToFront:cv];
 	[cv mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -182,7 +189,29 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 	cv.backgroundColor = [UIColor greenColor];
 	_containView4CustomInput = cv;
 	
+	kmMessageEmojiManager *emger = [[kmMessageEmojiManager alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
+	emger.backgroundColor = [UIColor cyanColor];
+	emger.alpha = 0.8;
 	
+	[cv addSubview:emger];
+	_emojiManager = emger;
+	
+	kmMessageMoreSelector *mmger = [[kmMessageMoreSelector alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
+	mmger.backgroundColor = [UIColor purpleColor];
+	mmger.alpha = 0.7f;
+	
+	[cv addSubview:mmger];
+	_moreSelector = mmger;
+	
+}
+
+- (void)voiceInputView {
+	if(_voiceInput || !self.inputToolbar.allowVoiceInput) return;
+	kmVoiceInput *vin = [[kmVoiceInput alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_containView4CustomInput.frame), kmInputViewHeight)];
+	vin.backgroundColor = [UIColor redColor];
+
+	[_containView4CustomInput addSubview:vin];
+	_voiceInput = vin;
 }
 
 - (void)dealloc
@@ -244,8 +273,6 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     _topContentAdditionalInset = topContentAdditionalInset;
     [self jsq_updateCollectionViewInsets];
 }
-
-
 
 #pragma mark - View lifecycle
 
@@ -696,16 +723,17 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 #pragma mark - Input toolbar delegate
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressLeftBarButton:(UIButton *)sender
-				inputBarState:(InputToolBarContentViewState)istate
+				inputBarState:(kmInputToolBarContentViewState)istate
 {
-	BOOL showKeyboard = istate == InputToolBarContentViewStateText;
+	BOOL showKeyboard = istate == kmInputToolBarContentViewStateText;
 	NSLog(@" ---- ==== voice input kb showed:%@", showKeyboard?@"yes":@"no");
 	if (showKeyboard) {
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
 		[toolbar.contentView.textView resignFirstResponder];
+		[self toggleInputView:istate];
 		[UIView animateWithDuration:0.4 animations:^{
-			[self jsq_setToolbarBottomLayoutGuideConstant:216];
+			[self jsq_setToolbarBottomLayoutGuideConstant:kmInputViewHeight];
 		}];
 		[self scrollToBottomAnimated:YES];
 	}
@@ -713,16 +741,17 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender
-			   inputBarState:(InputToolBarContentViewState)istate
+			   inputBarState:(kmInputToolBarContentViewState)istate
 {
-	BOOL showKeyboard = istate == InputToolBarContentViewStateText;
+	BOOL showKeyboard = istate == kmInputToolBarContentViewStateText;
 	NSLog(@"------ === emoji input view kb showed:%@", showKeyboard?@"yes":@"no");
 	if (showKeyboard) {
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
 		[toolbar.contentView.textView resignFirstResponder];
+		[self toggleInputView:istate];
 		[UIView animateWithDuration:0.4 animations:^{
-			[self jsq_setToolbarBottomLayoutGuideConstant:216];
+			[self jsq_setToolbarBottomLayoutGuideConstant:kmInputViewHeight];
 		}];
 		[self scrollToBottomAnimated:YES];
 	}
@@ -730,20 +759,73 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButtonB:(UIButton *)sender
-			   inputBarState:(InputToolBarContentViewState)istate
+			   inputBarState:(kmInputToolBarContentViewState)istate
 {
-	BOOL showKeyboard = istate == InputToolBarContentViewStateText;
+	BOOL showKeyboard = istate == kmInputToolBarContentViewStateText;
 	NSLog(@"------- === more select kb showed:%@", showKeyboard?@"yes":@"no");
 	if (showKeyboard) {
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
 		[toolbar.contentView.textView resignFirstResponder];
+		[self toggleInputView:istate];
 		[UIView animateWithDuration:0.4 animations:^{
-			[self jsq_setToolbarBottomLayoutGuideConstant:216];
+			[self jsq_setToolbarBottomLayoutGuideConstant:kmInputViewHeight];
 		}];
 		[self scrollToBottomAnimated:YES];
 	}
 	[self postCustomWillShowOrHide:!showKeyboard];
+}
+
+- (void)toggleInputView:(kmInputToolBarContentViewState)inputState {
+	
+	switch (inputState) {
+		case kmInputToolBarContentViewStateVoice: {
+			if (self.inputToolbar.allowVoiceInput) {
+				[self voiceInputView];
+				
+				CGRect frame = self.voiceInput.frame;
+				frame.origin.y = CGRectGetHeight(self.containView4CustomInput.frame);
+				self.voiceInput.frame = frame;
+				[self.containView4CustomInput bringSubviewToFront:self.voiceInput];
+				[UIView animateWithDuration:0.4 animations:^{
+					CGRect nf = CGRectMake(0, 0, CGRectGetWidth(self.voiceInput.frame), CGRectGetHeight(self.voiceInput.frame));
+					self.voiceInput.frame = nf;
+				}];
+			}
+		} break;
+		case kmInputToolBarContentViewStateEmoji: {
+			
+			CGRect frame = self.emojiManager.frame;
+			frame.origin.y = CGRectGetHeight(self.containView4CustomInput.frame);
+			self.emojiManager.frame = frame;
+			[self.containView4CustomInput bringSubviewToFront:self.emojiManager];
+			[UIView animateWithDuration:0.4 animations:^{
+				CGRect nf = CGRectMake(0, 0, CGRectGetWidth(self.emojiManager.frame), CGRectGetHeight(self.emojiManager.frame));
+				self.emojiManager.frame = nf;
+			}];
+			
+		} break;
+		case kmInputToolBarContentViewStateMore: {
+			
+			CGRect frame = self.moreSelector.frame;
+			frame.origin.y = CGRectGetHeight(self.containView4CustomInput.frame);
+			self.moreSelector.frame = frame;
+			[self.containView4CustomInput bringSubviewToFront:self.moreSelector];
+			[UIView animateWithDuration:0.4 animations:^{
+				CGRect nf = CGRectMake(0, 0, CGRectGetWidth(self.moreSelector.frame), CGRectGetHeight(self.moreSelector.frame));
+				self.moreSelector.frame = nf;
+			}];
+			
+		} break;
+		case kmInputToolBarContentViewStateText: {
+			
+		} break;
+		case kmInputToolBarContentViewStateNone: {
+			
+		} break;
+		default:
+			break;
+	}
 }
 
 - (void)postCustomWillShowOrHide:(BOOL)showOrHide {
@@ -890,9 +972,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
         return;
     }
 	
-	if (self.inputToolbar.contentView.inputToolState == InputToolBarContentViewStateMore
-		|| self.inputToolbar.contentView.inputToolState == InputToolBarContentViewStateEmoji
-		|| self.inputToolbar.contentView.inputToolState == InputToolBarContentViewStateVoice) {
+	if (self.inputToolbar.contentView.inputToolState == kmInputToolBarContentViewStateMore
+		|| self.inputToolbar.contentView.inputToolState == kmInputToolBarContentViewStateEmoji
+		|| self.inputToolbar.contentView.inputToolState == kmInputToolBarContentViewStateVoice) {
 		return;
 	}
     CGFloat heightFromBottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(keyboardFrame);

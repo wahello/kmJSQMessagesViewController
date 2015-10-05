@@ -21,12 +21,12 @@
 
 #import "JSQMessagesComposerTextView.h"
 
-typedef NS_ENUM(NSInteger, InputToolBarContentViewState) {
-	InputToolBarContentViewStateNone = 0,
-	InputToolBarContentViewStateText = 1,
-	InputToolBarContentViewStateEmoji = 2,
-	InputToolBarContentViewStateMore = 3,
-	InputToolBarContentViewStateVoice = 4,
+typedef NS_ENUM(NSInteger, kmInputToolBarContentViewState) {
+	kmInputToolBarContentViewStateNone = 0,
+	kmInputToolBarContentViewStateText = 1,
+	kmInputToolBarContentViewStateEmoji = 2,
+	kmInputToolBarContentViewStateMore = 3,
+	kmInputToolBarContentViewStateVoice = 4,
 };
 
 /**
@@ -128,7 +128,7 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
 
 @property (weak, nonatomic, readonly) UIView *rightBarButtonContainerViewB;
 
-@property (assign, nonatomic) InputToolBarContentViewState inputToolState;
+@property (assign, nonatomic) kmInputToolBarContentViewState inputToolState;
 
 
 #pragma mark - Class methods
@@ -141,7 +141,7 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
  */
 + (UINib *)nib;
 
-- (InputToolBarContentViewState)toggleKeyboard:(UIButton*)button;
+- (kmInputToolBarContentViewState)toggleKeyboard:(UIButton*)button;
 
 
 @end

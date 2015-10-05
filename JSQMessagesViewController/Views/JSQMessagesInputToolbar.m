@@ -110,19 +110,19 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 
 - (void)jsq_leftBarButtonPressed:(UIButton *)sender
 {
-	InputToolBarContentViewState slctd = [self.contentView toggleKeyboard:sender];
+	kmInputToolBarContentViewState slctd = [self.contentView toggleKeyboard:sender];
     [self.delegate messagesInputToolbar:self didPressLeftBarButton:sender inputBarState:slctd];
 }
 
 - (void)jsq_rightBarButtonPressed:(UIButton *)sender
 {
-	InputToolBarContentViewState slctd = [self.contentView toggleKeyboard:sender];
+	kmInputToolBarContentViewState slctd = [self.contentView toggleKeyboard:sender];
     [self.delegate messagesInputToolbar:self didPressRightBarButton:sender inputBarState:slctd];
 }
 
 - (void)jsq_rightBarButtonBPressed:(UIButton *)sender
 {
-	InputToolBarContentViewState slctd = [self.contentView toggleKeyboard:sender];
+	kmInputToolBarContentViewState slctd = [self.contentView toggleKeyboard:sender];
 	[self.delegate messagesInputToolbar:self didPressRightBarButtonB:sender inputBarState:slctd];
 }
 

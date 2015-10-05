@@ -93,6 +93,10 @@
      *
      *  self.inputToolbar.maximumHeight = 150;
      */
+	self.inputToolbar.maximumHeight = 150;
+	/*
+	 *	Set allow show voice input
+	 */
 	self.inputToolbar.allowVoiceInput = NO;
 }
 

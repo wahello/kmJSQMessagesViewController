@@ -107,6 +107,7 @@
 		88C00A521A44D4E500B004B3 /* JSQVideoMediaItemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C00A511A44D4E500B004B3 /* JSQVideoMediaItemTests.m */; };
 		88C4583019F5F7A0008FD427 /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C4582F19F5F7A0008FD427 /* JSQMessagesMediaViewBubbleImageMasker.m */; };
 		94A4FA20C2FBD0D62614D5A8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E6750B77E8A7042BA0754B /* libPods.a */; };
+		B3A5DB0E1BC1568700C7C967 /* kmVoiceInput.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A5DB0D1BC1568700C7C967 /* kmVoiceInput.m */; settings = {ASSET_TAGS = (); }; };
 		B3B7ABD11BBE68B7001D075F /* kmMessageEmojiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B7ABD01BBE68B7001D075F /* kmMessageEmojiManager.m */; settings = {ASSET_TAGS = (); }; };
 		B3B7ABD41BBE6912001D075F /* kmMessageMoreSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B7ABD31BBE6912001D075F /* kmMessageMoreSelector.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -272,6 +273,8 @@
 		88C4582E19F5F7A0008FD427 /* JSQMessagesMediaViewBubbleImageMasker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesMediaViewBubbleImageMasker.h; sourceTree = "<group>"; };
 		88C4582F19F5F7A0008FD427 /* JSQMessagesMediaViewBubbleImageMasker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesMediaViewBubbleImageMasker.m; sourceTree = "<group>"; };
 		97E6750B77E8A7042BA0754B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3A5DB0C1BC1568700C7C967 /* kmVoiceInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmVoiceInput.h; sourceTree = "<group>"; };
+		B3A5DB0D1BC1568700C7C967 /* kmVoiceInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmVoiceInput.m; sourceTree = "<group>"; };
 		B3B7ABCF1BBE68B7001D075F /* kmMessageEmojiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmMessageEmojiManager.h; sourceTree = "<group>"; };
 		B3B7ABD01BBE68B7001D075F /* kmMessageEmojiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmMessageEmojiManager.m; sourceTree = "<group>"; };
 		B3B7ABD21BBE6912001D075F /* kmMessageMoreSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmMessageMoreSelector.h; sourceTree = "<group>"; };
@@ -559,6 +562,8 @@
 				B3B7ABD01BBE68B7001D075F /* kmMessageEmojiManager.m */,
 				B3B7ABD21BBE6912001D075F /* kmMessageMoreSelector.h */,
 				B3B7ABD31BBE6912001D075F /* kmMessageMoreSelector.m */,
+				B3A5DB0C1BC1568700C7C967 /* kmVoiceInput.h */,
+				B3A5DB0D1BC1568700C7C967 /* kmVoiceInput.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -850,6 +855,7 @@
 				88A25FE019D8E0C400924534 /* DemoModelData.m in Sources */,
 				88A25F3C19D8DF2500924534 /* main.m in Sources */,
 				88A25F3719D8DF2500924534 /* AppDelegate.m in Sources */,
+				B3A5DB0E1BC1568700C7C967 /* kmVoiceInput.m in Sources */,
 				886FFD2E19E9A65D00EB8485 /* UIDevice+JSQMessages.m in Sources */,
 				88B5C41F1B7C422900EC79D4 /* JSQMessagesBubblesSizeCalculator.m in Sources */,
 				88A25FB619D8E01A00924534 /* NSString+JSQMessages.m in Sources */,

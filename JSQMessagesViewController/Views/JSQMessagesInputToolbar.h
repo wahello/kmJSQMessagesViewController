@@ -39,7 +39,7 @@
  *  @param sender  The button that received the touch event.
  */
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar
-	  didPressRightBarButton:(UIButton *)sender inputBarState:(InputToolBarContentViewState)istate;
+	  didPressRightBarButton:(UIButton *)sender inputBarState:(kmInputToolBarContentViewState)istate;
 
 /**
  *  Tells the delegate that the toolbar's `leftBarButtonItem` has been pressed.
@@ -48,10 +48,10 @@
  *  @param sender  The button that received the touch event.
  */
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar
-       didPressLeftBarButton:(UIButton *)sender inputBarState:(InputToolBarContentViewState)istate;
+       didPressLeftBarButton:(UIButton *)sender inputBarState:(kmInputToolBarContentViewState)istate;
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar
-	 didPressRightBarButtonB:(UIButton *)sender inputBarState:(InputToolBarContentViewState)istate;
+	 didPressRightBarButtonB:(UIButton *)sender inputBarState:(kmInputToolBarContentViewState)istate;
 
 @end
 
