@@ -42,9 +42,6 @@
 #import "NSBundle+JSQMessages.h"
 
 #import "Masonry.h"
-#import "kmMessageEmojiManager.h"
-#import "kmMessageMoreSelector.h"
-#import "kmVoiceInput.h"
 
 
 static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObservingContext;
@@ -261,7 +258,7 @@ static CGFloat kmInputViewHeight = 216;
     if (_showLoadEarlierMessagesHeader == showLoadEarlierMessagesHeader) {
         return;
     }
-
+	
     _showLoadEarlierMessagesHeader = showLoadEarlierMessagesHeader;
     [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
     [self.collectionView.collectionViewLayout invalidateLayout];
@@ -272,6 +269,19 @@ static CGFloat kmInputViewHeight = 216;
 {
     _topContentAdditionalInset = topContentAdditionalInset;
     [self jsq_updateCollectionViewInsets];
+}
+
+- (void)setClassicEmojiDir:(NSString *)classicEmojiDir {
+	if (_classicEmojiDir == classicEmojiDir) {
+		return;
+	}
+	BOOL isdir = NO;
+	BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:classicEmojiDir isDirectory:&isdir];
+
+	NSAssert1(exist, @"directory %@ not exist", classicEmojiDir);
+	NSAssert1(isdir, @" %@ is not directory", classicEmojiDir);
+	_classicEmojiDir = classicEmojiDir;
+	self.emojiManager.classicEmojiDir = classicEmojiDir;
 }
 
 #pragma mark - View lifecycle

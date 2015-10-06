@@ -81,7 +81,6 @@ const NSInteger kmMoreSelectButtonTag = 1003;
     _leftBarButtonContainerView = nil;
     _rightBarButtonContainerView = nil;
 	_rightBarButtonContainerViewB = nil;
-//	_keyboarButton = nil;
 }
 
 #pragma mark - Setters

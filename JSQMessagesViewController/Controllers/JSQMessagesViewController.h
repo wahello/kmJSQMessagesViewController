@@ -23,6 +23,10 @@
 #import "JSQMessagesInputToolbar.h"
 #import "JSQMessagesKeyboardController.h"
 
+#import "kmMessageEmojiManager.h"
+#import "kmMessageMoreSelector.h"
+#import "kmVoiceInput.h"
+
 /**
  *  The `JSQMessagesViewController` class is an abstract class that represents a view controller whose content consists of
  *  a `JSQMessagesCollectionView` and `JSQMessagesInputToolbar` and is specialized to display a messaging interface.
@@ -175,8 +179,14 @@
 
 //@property (strong, nonatomic) NSString *emojiPlistDir;
 
-@property (strong, nonatomic) NSString *classicEmojiDir;
+@property (copy, nonatomic) NSString *classicEmojiDir;
+@property (copy, nonatomic) NSString *plist4classicEmojiKeys;
+@property (copy, nonatomic) NSString *plist4classicEmojiKeyValue;
 
+
+@property (weak, nonatomic, readonly) kmMessageEmojiManager *emojiManager;
+@property (weak, nonatomic, readonly) kmMessageMoreSelector *moreSelector;
+@property (weak, nonatomic, readonly) kmVoiceInput *voiceInput;
 
 #pragma mark - Class methods
 

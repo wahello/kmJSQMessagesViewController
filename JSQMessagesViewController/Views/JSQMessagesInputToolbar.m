@@ -106,6 +106,7 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 	_allowVoiceInput = allowVoiceInput;
 }
 
+
 #pragma mark - Actions
 
 - (void)jsq_leftBarButtonPressed:(UIButton *)sender

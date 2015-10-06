@@ -107,9 +107,12 @@
 		88C00A521A44D4E500B004B3 /* JSQVideoMediaItemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C00A511A44D4E500B004B3 /* JSQVideoMediaItemTests.m */; };
 		88C4583019F5F7A0008FD427 /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C4582F19F5F7A0008FD427 /* JSQMessagesMediaViewBubbleImageMasker.m */; };
 		94A4FA20C2FBD0D62614D5A8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E6750B77E8A7042BA0754B /* libPods.a */; };
+		B354BC9A1BC20F7700609FB0 /* NSBundle+kmClassEmoji.m in Sources */ = {isa = PBXBuildFile; fileRef = B354BC991BC20F7700609FB0 /* NSBundle+kmClassEmoji.m */; settings = {ASSET_TAGS = (); }; };
 		B3A5DB0E1BC1568700C7C967 /* kmVoiceInput.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A5DB0D1BC1568700C7C967 /* kmVoiceInput.m */; settings = {ASSET_TAGS = (); }; };
 		B3B7ABD11BBE68B7001D075F /* kmMessageEmojiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B7ABD01BBE68B7001D075F /* kmMessageEmojiManager.m */; settings = {ASSET_TAGS = (); }; };
 		B3B7ABD41BBE6912001D075F /* kmMessageMoreSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B7ABD31BBE6912001D075F /* kmMessageMoreSelector.m */; settings = {ASSET_TAGS = (); }; };
+		B3E68D6D1BC36FD0001E8C89 /* classicEmoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B3E68D6C1BC36FD0001E8C89 /* classicEmoji.bundle */; settings = {ASSET_TAGS = (); }; };
+		B3E68D701BC38092001E8C89 /* kmClassicEmojiView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E68D6F1BC38092001E8C89 /* kmClassicEmojiView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -273,12 +276,17 @@
 		88C4582E19F5F7A0008FD427 /* JSQMessagesMediaViewBubbleImageMasker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesMediaViewBubbleImageMasker.h; sourceTree = "<group>"; };
 		88C4582F19F5F7A0008FD427 /* JSQMessagesMediaViewBubbleImageMasker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesMediaViewBubbleImageMasker.m; sourceTree = "<group>"; };
 		97E6750B77E8A7042BA0754B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B354BC981BC20F7700609FB0 /* NSBundle+kmClassEmoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+kmClassEmoji.h"; sourceTree = "<group>"; };
+		B354BC991BC20F7700609FB0 /* NSBundle+kmClassEmoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+kmClassEmoji.m"; sourceTree = "<group>"; };
 		B3A5DB0C1BC1568700C7C967 /* kmVoiceInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmVoiceInput.h; sourceTree = "<group>"; };
 		B3A5DB0D1BC1568700C7C967 /* kmVoiceInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmVoiceInput.m; sourceTree = "<group>"; };
 		B3B7ABCF1BBE68B7001D075F /* kmMessageEmojiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmMessageEmojiManager.h; sourceTree = "<group>"; };
 		B3B7ABD01BBE68B7001D075F /* kmMessageEmojiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmMessageEmojiManager.m; sourceTree = "<group>"; };
 		B3B7ABD21BBE6912001D075F /* kmMessageMoreSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmMessageMoreSelector.h; sourceTree = "<group>"; };
 		B3B7ABD31BBE6912001D075F /* kmMessageMoreSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmMessageMoreSelector.m; sourceTree = "<group>"; };
+		B3E68D6C1BC36FD0001E8C89 /* classicEmoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = classicEmoji.bundle; sourceTree = "<group>"; };
+		B3E68D6E1BC38092001E8C89 /* kmClassicEmojiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmClassicEmojiView.h; sourceTree = "<group>"; };
+		B3E68D6F1BC38092001E8C89 /* kmClassicEmojiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmClassicEmojiView.m; sourceTree = "<group>"; };
 		FC5C727E4CCDA2B95A7BA30C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -390,6 +398,8 @@
 		88A25F2B19D8DF2500924534 /* JSQMessagesDemo */ = {
 			isa = PBXGroup;
 			children = (
+				B3E68D6C1BC36FD0001E8C89 /* classicEmoji.bundle */,
+				B354BC971BC20F4500609FB0 /* category */,
 				88A25F2C19D8DF2500924534 /* AppDelegate.h */,
 				88A25F2D19D8DF2500924534 /* AppDelegate.m */,
 				88A25FD919D8E0C400924534 /* DemoMessagesViewController.h */,
@@ -564,6 +574,8 @@
 				B3B7ABD31BBE6912001D075F /* kmMessageMoreSelector.m */,
 				B3A5DB0C1BC1568700C7C967 /* kmVoiceInput.h */,
 				B3A5DB0D1BC1568700C7C967 /* kmVoiceInput.m */,
+				B3E68D6E1BC38092001E8C89 /* kmClassicEmojiView.h */,
+				B3E68D6F1BC38092001E8C89 /* kmClassicEmojiView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -637,6 +649,15 @@
 				88A2600019D8E18400924534 /* JSQMessagesTypingIndicatorFooterViewTests.m */,
 			);
 			path = ViewTests;
+			sourceTree = "<group>";
+		};
+		B354BC971BC20F4500609FB0 /* category */ = {
+			isa = PBXGroup;
+			children = (
+				B354BC981BC20F7700609FB0 /* NSBundle+kmClassEmoji.h */,
+				B354BC991BC20F7700609FB0 /* NSBundle+kmClassEmoji.m */,
+			);
+			path = category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -742,6 +763,7 @@
 				88A25FCD19D8E01A00924534 /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
 				88A25FD619D8E01A00924534 /* JSQMessagesToolbarContentView.xib in Resources */,
 				88A25F3A19D8DF2500924534 /* Images.xcassets in Resources */,
+				B3E68D6D1BC36FD0001E8C89 /* classicEmoji.bundle in Resources */,
 				88A25FBC19D8E01A00924534 /* JSQMessagesViewController.xib in Resources */,
 				88A25FD819D8E01A00924534 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				88A25F3919D8DF2500924534 /* Main.storyboard in Resources */,
@@ -837,6 +859,7 @@
 				883C11781A09FB100092A16D /* JSQMessagesCellTextView.m in Sources */,
 				88A25FB919D8E01A00924534 /* UIView+JSQMessages.m in Sources */,
 				88A25FCA19D8E01A00924534 /* JSQMessagesCollectionView.m in Sources */,
+				B354BC9A1BC20F7700609FB0 /* NSBundle+kmClassEmoji.m in Sources */,
 				88A25FD219D8E01A00924534 /* JSQMessagesLabel.m in Sources */,
 				88445B4019E1B4470014F889 /* JSQLocationMediaItem.m in Sources */,
 				88A25FC619D8E01A00924534 /* JSQMessagesAvatarImage.m in Sources */,
@@ -847,6 +870,7 @@
 				B3B7ABD41BBE6912001D075F /* kmMessageMoreSelector.m in Sources */,
 				88A25FC519D8E01A00924534 /* JSQMessage.m in Sources */,
 				88A25FD719D8E01A00924534 /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
+				B3E68D701BC38092001E8C89 /* kmClassicEmojiView.m in Sources */,
 				88A25FD319D8E01A00924534 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				88A25FC819D8E01A00924534 /* JSQPhotoMediaItem.m in Sources */,
 				88C4583019F5F7A0008FD427 /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,

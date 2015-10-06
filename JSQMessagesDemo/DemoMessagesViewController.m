@@ -18,6 +18,8 @@
 
 #import "DemoMessagesViewController.h"
 
+#import "NSBundle+kmClassEmoji.h"
+
 @implementation DemoMessagesViewController
 
 #pragma mark - View lifecycle
@@ -93,11 +95,18 @@
      *
      *  self.inputToolbar.maximumHeight = 150;
      */
-	self.inputToolbar.maximumHeight = 150;
+	self.inputToolbar.maximumHeight = 110;
+	
 	/*
 	 *	Set allow show voice input
 	 */
 	self.inputToolbar.allowVoiceInput = NO;
+	
+	/**
+	*	set emoji bundlePath
+	*/
+	self.classicEmojiDir = [[NSBundle km_classicEmojiBundle] bundlePath];
+	
 }
 
 - (void)viewWillAppear:(BOOL)animated
