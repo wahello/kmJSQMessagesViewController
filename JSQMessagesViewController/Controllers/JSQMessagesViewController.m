@@ -70,7 +70,7 @@ static CGFloat kmInputViewHeight = 216;
 ///--
 @property (weak, nonatomic) UIView *containView4CustomInput;
 
-@property (weak, nonatomic) kmMessageEmojiManagerView *emojiManager;
+@property (weak, nonatomic) kmMessageEmotionManagerView *emotinManagerView;
 @property (weak, nonatomic) kmMessageMoreSelector *moreSelector;
 @property (weak, nonatomic) kmVoiceInput *voiceInput;
 
@@ -186,10 +186,12 @@ static CGFloat kmInputViewHeight = 216;
 	//cv.backgroundColor = [UIColor greenColor];
 	_containView4CustomInput = cv;
 	
-	kmMessageEmojiManagerView *emger = [[kmMessageEmojiManagerView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
+	kmMessageEmotionManagerView *emger = [[kmMessageEmotionManagerView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
+	emger.emotionDatasource = self;
+	emger.emotionDelegate = self;
 	
 	[cv addSubview:emger];
-	_emojiManager = emger;
+	_emotionManagerView = emger;
 	
 	kmMessageMoreSelector *mmger = [[kmMessageMoreSelector alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
 	
@@ -231,9 +233,13 @@ static CGFloat kmInputViewHeight = 216;
     [_keyboardController endListeningForKeyboard];
     _keyboardController = nil;
 	
+	_emotionManagerView.emotionDelegate = nil;
+	_emotionManagerView.emotionDatasource = nil;
+	
 	//--
 	[_containView4CustomInput removeFromSuperview];
 	_containView4CustomInput = nil;
+	
 }
 
 #pragma mark - Setters
@@ -267,18 +273,6 @@ static CGFloat kmInputViewHeight = 216;
     [self jsq_updateCollectionViewInsets];
 }
 
-- (void)setClassicEmojiDir:(NSString *)classicEmojiDir {
-	if (_classicEmojiDir == classicEmojiDir) {
-		return;
-	}
-	BOOL isdir = NO;
-	BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:classicEmojiDir isDirectory:&isdir];
-
-	NSAssert1(exist, @"directory %@ not exist", classicEmojiDir);
-	NSAssert1(isdir, @" %@ is not directory", classicEmojiDir);
-	_classicEmojiDir = classicEmojiDir;
-	self.emojiManager.classicEmojiDir = classicEmojiDir;
-}
 
 #pragma mark - View lifecycle
 
@@ -730,6 +724,38 @@ static CGFloat kmInputViewHeight = 216;
  didTapCellAtIndexPath:(NSIndexPath *)indexPath
          touchLocation:(CGPoint)touchLocation { }
 
+#pragma mark -- kmMessageEmotionManagerView delegate
+
+- (void)didSelectEmotion:(kmEmotion *)emotion atIndexPath:(NSIndexPath *)indexPath {
+	NSLog(@" --- ==== %@ ", indexPath);
+}
+
+- (void)didSelectedEmoji:(NSString *)emojiName isDele:(BOOL)isdele {
+	NSLog(@" emojiName --=== %@ ", emojiName);
+}
+
+- (NSString *)textThatInputed {
+	return self.inputToolbar.contentView.textView.text;
+}
+
+- (void)emojiSendButtonClicked {
+	NSLog(@" --- emoji button send ");
+}
+
+#pragma mark -- kmMessageEmotionManagerView datasource
+
+- (NSInteger)numberOfEmotionManagers {
+	return 0;
+}
+
+- (kmEmotionManager*)emotionManagerForColumn:(NSInteger)columnIndex {
+	return nil;
+}
+
+- (NSArray*)emotionManagersAtManager {
+	return nil;
+}
+
 #pragma mark - Input toolbar delegate
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressLeftBarButton:(UIButton *)sender
@@ -754,7 +780,6 @@ static CGFloat kmInputViewHeight = 216;
 			   inputBarState:(kmInputToolBarContentViewState)istate
 {
 	BOOL showKeyboard = istate == kmInputToolBarContentViewStateText;
-	NSLog(@"------ === emoji input view kb showed:%@", showKeyboard?@"yes":@"no");
 	if (showKeyboard) {
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
@@ -772,7 +797,6 @@ static CGFloat kmInputViewHeight = 216;
 			   inputBarState:(kmInputToolBarContentViewState)istate
 {
 	BOOL showKeyboard = istate == kmInputToolBarContentViewStateText;
-	NSLog(@"------- === more select kb showed:%@", showKeyboard?@"yes":@"no");
 	if (showKeyboard) {
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
@@ -805,13 +829,13 @@ static CGFloat kmInputViewHeight = 216;
 		} break;
 		case kmInputToolBarContentViewStateEmoji: {
 			
-			CGRect frame = self.emojiManager.frame;
+			CGRect frame = self.emotionManagerView.frame;
 			frame.origin.y = CGRectGetHeight(self.containView4CustomInput.frame);
-			self.emojiManager.frame = frame;
-			[self.containView4CustomInput bringSubviewToFront:self.emojiManager];
+			self.emotionManagerView.frame = frame;
+			[self.containView4CustomInput bringSubviewToFront:self.emotionManagerView];
 			[UIView animateWithDuration:0.4 animations:^{
-				CGRect nf = CGRectMake(0, 0, CGRectGetWidth(self.emojiManager.frame), CGRectGetHeight(self.emojiManager.frame));
-				self.emojiManager.frame = nf;
+				CGRect nf = CGRectMake(0, 0, CGRectGetWidth(self.emotionManagerView.frame), CGRectGetHeight(self.emotionManagerView.frame));
+				self.emotionManagerView.frame = nf;
 			}];
 			
 		} break;
@@ -904,6 +928,7 @@ static CGFloat kmInputViewHeight = 216;
 	}
 	return YES;
 }
+
 #pragma mark - Notifications
 
 - (void)jsq_handleDidChangeStatusBarFrameNotification:(NSNotification *)notification

@@ -20,9 +20,23 @@
 
 #import "NSBundle+kmClassEmoji.h"
 
+@interface DemoMessagesViewController ()
+
+@property (nonatomic, strong) NSArray *emotionManagers;
+
+
+
+@end
+
+
 @implementation DemoMessagesViewController
 
 #pragma mark - View lifecycle
+
+- (void)dealloc {
+	self.emotionManagers = nil;
+}
+
 
 /**
  *  Override point for customization.
@@ -105,8 +119,34 @@
 	/**
 	*	set emoji bundlePath
 	*/
-	self.classicEmojiDir = [[NSBundle km_classicEmojiBundle] bundlePath];
 	
+	[self configureView];
+}
+
+- (void)configureView {
+
+	NSMutableArray *temArr = [[NSMutableArray alloc] init];
+	for (NSInteger ii = 0; ii < 1; ii ++) {
+		kmEmotionManager *emgr = [[kmEmotionManager alloc] init];
+		
+		NSMutableArray *emtions = [NSMutableArray array];
+		if (ii == 0) {
+			
+			emgr.emotionName = [NSString stringWithFormat:@"经典"];
+			emgr.emotionType = kmEmotionTypeClassic;
+			emgr.emotionFilePrefix = @"";
+			emgr.emotionFileSuffix = @"@2x.png";
+			NSString *cEmojibPath = [[NSBundle mainBundle].bundlePath stringByAppendingPathComponent:@"classicEmoji.bundle"];
+			emgr.emotionResourceDir = [cEmojibPath lastPathComponent];
+		}
+		else {
+			//TODO
+		}
+		emgr.emotions = emtions;
+		[temArr addObject:emgr];
+	}
+	self.emotionManagers = temArr;
+	[self.emotionManagerView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -123,7 +163,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+	
     /**
      *  Enable/disable springy bubbles, default is NO.
      *  You must set this from `viewDidAppear:`
@@ -131,8 +171,6 @@
      */
     self.collectionView.collectionViewLayout.springinessEnabled = [NSUserDefaults springinessSetting];
 }
-
-
 
 #pragma mark - Testing
 
@@ -669,5 +707,21 @@
     }
     return YES;
 }
+
+
+#pragma mark -- kmMessageEmotionManagerView datasource
+
+- (NSInteger)numberOfEmotionManagers {
+	return self.emotionManagers.count;
+}
+
+- (kmEmotionManager*)emotionManagerForColumn:(NSInteger)columnIndex {
+	return [self.emotionManagers objectAtIndex:columnIndex];
+}
+
+- (NSArray*)emotionManagersAtManager {
+	return self.emotionManagers;
+}
+
 
 @end

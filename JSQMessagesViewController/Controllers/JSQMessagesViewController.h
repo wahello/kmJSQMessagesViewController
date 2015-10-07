@@ -23,7 +23,7 @@
 #import "JSQMessagesInputToolbar.h"
 #import "JSQMessagesKeyboardController.h"
 
-#import "kmMessageEmojiManagerView.h"
+#import "kmMessageEmotionManagerView.h"
 #import "kmMessageMoreSelector.h"
 #import "kmVoiceInput.h"
 
@@ -33,9 +33,7 @@
  *
  *  @warning This class is intended to be subclassed. You should not use it directly.
  */
-@interface JSQMessagesViewController : UIViewController <JSQMessagesCollectionViewDataSource,
-                                                         JSQMessagesCollectionViewDelegateFlowLayout,
-                                                         UITextViewDelegate>
+@interface JSQMessagesViewController : UIViewController <JSQMessagesCollectionViewDataSource,JSQMessagesCollectionViewDelegateFlowLayout,UITextViewDelegate, kmMessageEmotionManagerViewDatasource, kmMessageEmotionManagerViewDelegate>
 
 /**
  *  Returns the collection view object managed by this view controller.
@@ -177,14 +175,11 @@
 @property (assign, nonatomic) CGFloat topContentAdditionalInset;
 
 
-//@property (strong, nonatomic) NSString *emojiPlistDir;
-
-@property (copy, nonatomic) NSString *classicEmojiDir;
 @property (copy, nonatomic) NSString *plist4classicEmojiKeys;
 @property (copy, nonatomic) NSString *plist4classicEmojiKeyValue;
 
 
-@property (weak, nonatomic, readonly) kmMessageEmojiManagerView *emojiManagerView;
+@property (weak, nonatomic, readonly) kmMessageEmotionManagerView *emotionManagerView;
 @property (weak, nonatomic, readonly) kmMessageMoreSelector *moreSelector;
 @property (weak, nonatomic, readonly) kmVoiceInput *voiceInput;
 

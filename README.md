@@ -1,4 +1,5 @@
-This is based on https://github.com/jessesquires/JSQMessagesViewController,I just want to make it more like QQ or WeChat.
+This is based on https://github.com/jessesquires/JSQMessagesViewController,I just want to make it more like QQ or WeChat.And inspired by https://github.com/xhzengAIB/MessageDisplayKit;
+
 ![JSQMessagesViewController banner](https://raw.githubusercontent.com/jessesquires/JSQMessagesViewController/develop/Assets/jsq_messages_banner.png)
 
 [![Build Status](https://secure.travis-ci.org/jessesquires/JSQMessagesViewController.svg)](http://travis-ci.org/jessesquires/JSQMessagesViewController) [![Version Status](http://img.shields.io/cocoapods/v/JSQMessagesViewController.png)][podLink] [![license MIT](http://img.shields.io/badge/license-MIT-orange.png)][mitLink] [![codecov.io](https://img.shields.io/codecov/c/github/jessesquires/JSQMessagesViewController.svg)](http://codecov.io/github/jessesquires/JSQMessagesViewController) [![Platform](https://cocoapod-badges.herokuapp.com/p/JSQMessagesViewController/badge.png)][docsLink]
