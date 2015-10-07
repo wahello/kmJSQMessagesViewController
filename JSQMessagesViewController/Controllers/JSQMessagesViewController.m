@@ -70,7 +70,7 @@ static CGFloat kmInputViewHeight = 216;
 ///--
 @property (weak, nonatomic) UIView *containView4CustomInput;
 
-@property (weak, nonatomic) kmMessageEmojiManager *emojiManager;
+@property (weak, nonatomic) kmMessageEmojiManagerView *emojiManager;
 @property (weak, nonatomic) kmMessageMoreSelector *moreSelector;
 @property (weak, nonatomic) kmVoiceInput *voiceInput;
 
@@ -183,19 +183,15 @@ static CGFloat kmInputViewHeight = 216;
 		make.bottom.equalTo(self.view.mas_bottom);
 		
 	}];
-	cv.backgroundColor = [UIColor greenColor];
+	//cv.backgroundColor = [UIColor greenColor];
 	_containView4CustomInput = cv;
 	
-	kmMessageEmojiManager *emger = [[kmMessageEmojiManager alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
-	emger.backgroundColor = [UIColor cyanColor];
-	emger.alpha = 0.8;
+	kmMessageEmojiManagerView *emger = [[kmMessageEmojiManagerView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
 	
 	[cv addSubview:emger];
 	_emojiManager = emger;
 	
 	kmMessageMoreSelector *mmger = [[kmMessageMoreSelector alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
-	mmger.backgroundColor = [UIColor purpleColor];
-	mmger.alpha = 0.7f;
 	
 	[cv addSubview:mmger];
 	_moreSelector = mmger;
@@ -236,8 +232,8 @@ static CGFloat kmInputViewHeight = 216;
     _keyboardController = nil;
 	
 	//--
+	[_containView4CustomInput removeFromSuperview];
 	_containView4CustomInput = nil;
-	
 }
 
 #pragma mark - Setters
@@ -313,6 +309,8 @@ static CGFloat kmInputViewHeight = 216;
     }
 
     [self jsq_updateKeyboardTriggerPoint];
+	_containView4CustomInput.hidden = NO;
+	
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -331,6 +329,8 @@ static CGFloat kmInputViewHeight = 216;
 {
     [super viewWillDisappear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
+	
+	_containView4CustomInput.hidden = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated

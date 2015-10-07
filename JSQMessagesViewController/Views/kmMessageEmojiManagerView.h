@@ -17,16 +17,16 @@ typedef NS_ENUM(NSInteger, kmEmotionType) {
 };
 
 
-@protocol kmMessageEmojiManagerDelegate;
+@protocol kmMessageEmojiManagerViewDelegate;
 
 
-@interface kmMessageEmojiManager : UIView <kmClassicEmojiViewDelegate>
+@interface kmMessageEmojiManagerView : UIView <kmClassicEmojiViewDelegate>
 {
 	
 	
 }
 
-@property (nonatomic, weak) id<kmMessageEmojiManagerDelegate> emojiDelegate;
+@property (nonatomic, weak) id<kmMessageEmojiManagerViewDelegate> emojiDelegate;
 
 @property (nonatomic, copy) NSString *classicEmojiDir;
 
@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, kmEmotionType) {
 @end
 
 
-@protocol kmMessageEmojiManagerDelegate <NSObject>
+@protocol kmMessageEmojiManagerViewDelegate <NSObject>
 
 @required
 

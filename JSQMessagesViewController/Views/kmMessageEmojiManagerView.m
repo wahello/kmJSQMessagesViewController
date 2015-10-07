@@ -6,14 +6,14 @@
 //  Copyright © 2015 Hexed Bits. All rights reserved.
 //
 
-#import "kmMessageEmojiManager.h"
+#import "kmMessageEmojiManagerView.h"
 
 
 #define kmPageControlHeight 38
 #define kmSectionBarHeight 36
 
 
-@interface kmMessageEmojiManager ()<UIScrollViewDelegate>
+@interface kmMessageEmojiManagerView ()<UIScrollViewDelegate>
 
 @property (nonatomic, weak) UIPageControl *emotionPageControl;
 
@@ -25,8 +25,8 @@
 
 @end
 
-@implementation kmMessageEmojiManager
 
+@implementation kmMessageEmojiManagerView
 
 - (instancetype)initWithFrame:(CGRect)frame {
 	self = [super initWithFrame:frame];
@@ -45,8 +45,9 @@
 	
 	if (!_emotionPageControl) {
 		UIPageControl *epageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.bounds) - kmPageControlHeight - kmSectionBarHeight, CGRectGetWidth(self.bounds), kmPageControlHeight)];
+		epageControl.pageIndicatorTintColor = [UIColor colorWithWhite:0.678 alpha:1.000];
 		epageControl.currentPageIndicatorTintColor = [UIColor colorWithWhite:0.471 alpha:1.000];
-//		epageControl.backgroundColor = self.backgroundColor;
+		epageControl.backgroundColor = self.backgroundColor;
 		epageControl.hidesForSinglePage = YES;
 		epageControl.defersCurrentPageDisplay = YES;
 		[self addSubview:epageControl];
@@ -91,7 +92,8 @@
 										  CGRectGetWidth(self.bounds),
 										  CGRectGetHeight(self.bounds) - kmPageControlHeight - kmSectionBarHeight);
 			UIScrollView *escv = [[UIScrollView alloc] initWithFrame:frame];
-			escv.backgroundColor = [UIColor redColor]; //self.backgroundColor;
+			escv.backgroundColor = //[UIColor redColor];
+									self.backgroundColor;
 			
 			for (NSInteger ii = 0; ii < ps; ii ++) {
 				
@@ -102,7 +104,8 @@
 				NSArray *subarr = [allKeys subarrayWithRange:NSMakeRange(ii * 20, 20)];
 				NSString *delePath = [[cmbundle bundlePath] stringByAppendingPathComponent:@"DeleteEmoticonBtn_ios7"];
 				kmClassicEmojiView *cEmojiView = [[kmClassicEmojiView alloc] initWithFrame:frame keys:subarr dict:self.classicEmojis emojiPath:self.classicEmojiDir delPath:delePath atPageIndex:ps];
-				cEmojiView.backgroundColor = [UIColor greenColor];
+				cEmojiView.backgroundColor = self.backgroundColor;
+											//[UIColor greenColor];
 				cEmojiView.emojiDelegate = self;
 				[escv addSubview:cEmojiView];
 			}

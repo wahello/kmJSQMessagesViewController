@@ -23,7 +23,7 @@
 #import "JSQMessagesInputToolbar.h"
 #import "JSQMessagesKeyboardController.h"
 
-#import "kmMessageEmojiManager.h"
+#import "kmMessageEmojiManagerView.h"
 #import "kmMessageMoreSelector.h"
 #import "kmVoiceInput.h"
 
@@ -184,7 +184,7 @@
 @property (copy, nonatomic) NSString *plist4classicEmojiKeyValue;
 
 
-@property (weak, nonatomic, readonly) kmMessageEmojiManager *emojiManager;
+@property (weak, nonatomic, readonly) kmMessageEmojiManagerView *emojiManagerView;
 @property (weak, nonatomic, readonly) kmMessageMoreSelector *moreSelector;
 @property (weak, nonatomic, readonly) kmVoiceInput *voiceInput;
 
