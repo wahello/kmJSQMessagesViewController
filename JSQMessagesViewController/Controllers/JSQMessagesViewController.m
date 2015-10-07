@@ -189,14 +189,14 @@ static CGFloat kmInputViewHeight = 216;
 	kmMessageEmotionManagerView *emger = [[kmMessageEmotionManagerView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
 	emger.emotionDatasource = self;
 	emger.emotionDelegate = self;
-	
+	emger.backgroundColor = [UIColor whiteColor];
 	[cv addSubview:emger];
 	_emotionManagerView = emger;
 	
-	kmMessageMoreSelector *mmger = [[kmMessageMoreSelector alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
-	
-	[cv addSubview:mmger];
-	_moreSelector = mmger;
+	kmMessageMoreSelector *mmsl = [[kmMessageMoreSelector alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
+	mmsl.backgroundColor = [UIColor whiteColor];
+	[cv addSubview:mmsl];
+	_moreSelector = mmsl;
 	
 }
 
