@@ -24,7 +24,7 @@
 
 @property (nonatomic, strong) NSArray *emotionManagers;
 
-
+@property (nonatomic, strong) NSArray *moMenuItems;
 
 @end
 
@@ -124,7 +124,34 @@
 }
 
 - (void)configureView {
-
+	
+	NSMutableArray *moreMenuItems = [NSMutableArray array];
+	NSString *filePath = [[NSBundle mainBundle] pathForResource:@"plusInputData" ofType:@"plist"];
+	NSArray *tmoreArr = [NSArray arrayWithContentsOfFile:filePath];
+	for (NSDictionary *tdict in tmoreArr) {
+		NSString *imgname = [tdict objectForKey:@"image"];
+		NSString *ttitle = [tdict objectForKey:@"title"];
+		NSString *hlimgname = [tdict objectForKey:@"image_hl"];
+		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
+		[moreMenuItems addObject:shareMenuItem];
+	}
+	for (NSDictionary *tdict in tmoreArr) {
+		NSString *imgname = [tdict objectForKey:@"image"];
+		NSString *ttitle = [tdict objectForKey:@"title"];
+		NSString *hlimgname = [tdict objectForKey:@"image_hl"];
+		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
+		[moreMenuItems addObject:shareMenuItem];
+	}
+	for (NSDictionary *tdict in tmoreArr) {
+		NSString *imgname = [tdict objectForKey:@"image"];
+		NSString *ttitle = [tdict objectForKey:@"title"];
+		NSString *hlimgname = [tdict objectForKey:@"image_hl"];
+		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
+		[moreMenuItems addObject:shareMenuItem];
+	}
+	self.moMenuItems = moreMenuItems;
+	self.moMenuView.shareMenuItems = self.moMenuItems;
+	
 	NSMutableArray *temArr = [[NSMutableArray alloc] init];
 	for (NSInteger ii = 0; ii < 1; ii ++) {
 		kmEmotionManager *emgr = [[kmEmotionManager alloc] init];
@@ -708,7 +735,6 @@
     return YES;
 }
 
-
 #pragma mark -- kmMessageEmotionManagerView datasource
 
 - (NSInteger)numberOfEmotionManagers {
@@ -723,5 +749,9 @@
 	return self.emotionManagers;
 }
 
+- (void)didSelecteShareMenuItem:(kmMoreMenuItem *)shareMenuItem atIndex:(NSInteger)index {
+	NSLog(@" %d ", index);
+	
+}
 
 @end

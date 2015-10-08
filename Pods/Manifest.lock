@@ -2,15 +2,18 @@ PODS:
   - JSQSystemSoundPlayer (2.0.1)
   - Masonry (0.6.3)
   - OCMock (3.1.5)
+  - UICollectionViewLeftAlignedLayout (1.0.0)
 
 DEPENDENCIES:
   - JSQSystemSoundPlayer (~> 2.0)
   - Masonry
   - OCMock
+  - UICollectionViewLeftAlignedLayout (~> 1.0.0)
 
 SPEC CHECKSUMS:
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   OCMock: 4c2925291f80407c3738dd1db14d21d0cc278864
+  UICollectionViewLeftAlignedLayout: c3dddf91b3dc72ede7eca7a532545804389ab833
 
 COCOAPODS: 0.39.0.beta.4

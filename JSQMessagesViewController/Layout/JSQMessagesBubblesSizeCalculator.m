@@ -120,7 +120,7 @@
                                                              options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                                           attributes:@{ NSFontAttributeName : layout.messageBubbleFont }
                                                              context:nil];
-
+		//--//-----
         CGSize stringSize = CGRectIntegral(stringRect).size;
 
         CGFloat verticalContainerInsets = layout.messageBubbleTextViewTextContainerInsets.top + layout.messageBubbleTextViewTextContainerInsets.bottom;

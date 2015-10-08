@@ -25,7 +25,12 @@
 
 #import "kmMessageEmotionManagerView.h"
 #import "kmMessageMoreSelector.h"
+
+#import "kmMoreMenuView.h"
+
 #import "kmVoiceInput.h"
+
+#import "kmMoreMenuView.h"
 
 /**
  *  The `JSQMessagesViewController` class is an abstract class that represents a view controller whose content consists of
@@ -33,7 +38,7 @@
  *
  *  @warning This class is intended to be subclassed. You should not use it directly.
  */
-@interface JSQMessagesViewController : UIViewController <JSQMessagesCollectionViewDataSource,JSQMessagesCollectionViewDelegateFlowLayout,UITextViewDelegate, kmMessageEmotionManagerViewDatasource, kmMessageEmotionManagerViewDelegate>
+@interface JSQMessagesViewController : UIViewController <JSQMessagesCollectionViewDataSource,JSQMessagesCollectionViewDelegateFlowLayout,UITextViewDelegate, kmMessageEmotionManagerViewDatasource, kmMessageEmotionManagerViewDelegate, kmMoreMenuViewDelegate>
 
 /**
  *  Returns the collection view object managed by this view controller.
@@ -180,7 +185,8 @@
 
 
 @property (weak, nonatomic, readonly) kmMessageEmotionManagerView *emotionManagerView;
-@property (weak, nonatomic, readonly) kmMessageMoreSelector *moreSelector;
+//@property (weak, nonatomic, readonly) kmMessageMoreSelector *moreSelector;
+@property (weak, nonatomic, readonly) kmMoreMenuView *moMenuView;
 @property (weak, nonatomic, readonly) kmVoiceInput *voiceInput;
 
 #pragma mark - Class methods

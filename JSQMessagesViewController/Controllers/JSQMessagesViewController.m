@@ -71,7 +71,8 @@ static CGFloat kmInputViewHeight = 216;
 @property (weak, nonatomic) UIView *containView4CustomInput;
 
 @property (weak, nonatomic) kmMessageEmotionManagerView *emotinManagerView;
-@property (weak, nonatomic) kmMessageMoreSelector *moreSelector;
+//@property (weak, nonatomic) kmMessageMoreSelector *moreSelector;
+@property (weak, nonatomic) kmMoreMenuView *moMenuView;
 @property (weak, nonatomic) kmVoiceInput *voiceInput;
 
 
@@ -193,13 +194,24 @@ static CGFloat kmInputViewHeight = 216;
 	[cv addSubview:emger];
 	_emotionManagerView = emger;
 	
-	kmMessageMoreSelector *mmsl = [[kmMessageMoreSelector alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
-	mmsl.backgroundColor = [UIColor whiteColor];
-	[cv addSubview:mmsl];
-	_moreSelector = mmsl;
+//	kmMessageMoreSelector *mmsl = [[kmMessageMoreSelector alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
+//	mmsl.backgroundColor = [UIColor whiteColor];
+//	[cv addSubview:mmsl];
+//	_moreSelector = mmsl;
 	
 }
-
+- (kmMoreMenuView*)moMenuView {
+	if (!_moMenuView) {
+		CGRect frame = CGRectMake(0, 0, CGRectGetWidth(_containView4CustomInput.bounds), kmInputViewHeight);
+		kmMoreMenuView *mmv = [[kmMoreMenuView alloc] initWithFrame:frame];
+		mmv.delegate = self;
+//		mmv.backgroundColor  = [UIColor whiteColor];
+//		mmv.alpha = 0.0f;
+		[_containView4CustomInput addSubview:mmv];
+		_moMenuView = mmv;
+	}
+	return _moMenuView;
+}
 - (void)voiceInputView {
 	if(_voiceInput || !self.inputToolbar.allowVoiceInput) return;
 	kmVoiceInput *vin = [[kmVoiceInput alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_containView4CustomInput.frame), kmInputViewHeight)];
@@ -841,13 +853,21 @@ static CGFloat kmInputViewHeight = 216;
 		} break;
 		case kmInputToolBarContentViewStateMore: {
 			
-			CGRect frame = self.moreSelector.frame;
+//			CGRect frame = self.moreSelector.frame;
+//			frame.origin.y = CGRectGetHeight(self.containView4CustomInput.frame);
+//			self.moreSelector.frame = frame;
+//			[self.containView4CustomInput bringSubviewToFront:self.moreSelector];
+//			[UIView animateWithDuration:0.4 animations:^{
+//				CGRect nf = CGRectMake(0, 0, CGRectGetWidth(self.moreSelector.frame), CGRectGetHeight(self.moreSelector.frame));
+//				self.moreSelector.frame = nf;
+//			}];
+			CGRect frame = self.moMenuView.frame;
 			frame.origin.y = CGRectGetHeight(self.containView4CustomInput.frame);
-			self.moreSelector.frame = frame;
-			[self.containView4CustomInput bringSubviewToFront:self.moreSelector];
+			self.moMenuView.frame = frame;
+			[self.containView4CustomInput bringSubviewToFront:self.moMenuView];
 			[UIView animateWithDuration:0.4 animations:^{
-				CGRect nf = CGRectMake(0, 0, CGRectGetWidth(self.moreSelector.frame), CGRectGetHeight(self.moreSelector.frame));
-				self.moreSelector.frame = nf;
+				CGRect nf = CGRectMake(0, 0, CGRectGetWidth(self.moMenuView.frame), CGRectGetHeight(self.moMenuView.frame));
+				self.moMenuView.frame = nf;
 			}];
 			
 		} break;

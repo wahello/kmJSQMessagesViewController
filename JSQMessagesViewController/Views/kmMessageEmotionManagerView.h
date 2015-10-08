@@ -14,6 +14,11 @@
 
 #import "kmEmotionSectionBar.h"
 
+#define kmoreMenuItemWidth 60
+#define kmoreMenuItemHeight 80
+
+#define kmoreMiniLineSpacing 10
+
 #define kmEmotionPerRowItemCount (((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)) ? 10 : 4)
 
 @protocol kmMessageEmotionManagerViewDelegate;
