@@ -1,4 +1,4 @@
-This is based on https://github.com/jessesquires/JSQMessagesViewController,I just want to make it more like QQ or WeChat.And inspired by https://github.com/xhzengAIB/MessageDisplayKit;
+This is based on https://github.com/jessesquires/JSQMessagesViewController and https://github.com/xhzengAIB/MessageDisplayKit,I just want to make it more like QQ or WeChat. 
 
 ![JSQMessagesViewController banner](https://raw.githubusercontent.com/jessesquires/JSQMessagesViewController/develop/Assets/jsq_messages_banner.png)
 
