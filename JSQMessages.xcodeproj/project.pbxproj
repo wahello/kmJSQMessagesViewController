@@ -115,9 +115,6 @@
 		B3B26F021BC4D94000D5A6D8 /* kmEmotionCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B26F011BC4D94000D5A6D8 /* kmEmotionCollectionViewFlowLayout.m */; settings = {ASSET_TAGS = (); }; };
 		B3B26F051BC4DC6100D5A6D8 /* kmEmotionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B26F041BC4DC6100D5A6D8 /* kmEmotionCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		B3B7ABD11BBE68B7001D075F /* kmMessageEmotionManagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B7ABD01BBE68B7001D075F /* kmMessageEmotionManagerView.m */; settings = {ASSET_TAGS = (); }; };
-		B3B7ABD41BBE6912001D075F /* kmMessageMoreSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B7ABD31BBE6912001D075F /* kmMessageMoreSelector.m */; settings = {ASSET_TAGS = (); }; };
-		B3BED2AE1BC65BEF00FB9ACD /* kmMoreMenuViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3BED2AD1BC65BEF00FB9ACD /* kmMoreMenuViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		B3BED2B11BC661AD00FB9ACD /* kmMoreMenuViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B3BED2B01BC661AD00FB9ACD /* kmMoreMenuViewFlowLayout.m */; settings = {ASSET_TAGS = (); }; };
 		B3BED2BD1BC6722F00FB9ACD /* aio_icons_camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B3BED2B31BC6722F00FB9ACD /* aio_icons_camera@2x.png */; settings = {ASSET_TAGS = (); }; };
 		B3BED2BE1BC6722F00FB9ACD /* aio_icons_camera_disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B3BED2B41BC6722F00FB9ACD /* aio_icons_camera_disable@2x.png */; settings = {ASSET_TAGS = (); }; };
 		B3BED2BF1BC6722F00FB9ACD /* aio_icons_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B3BED2B51BC6722F00FB9ACD /* aio_icons_folder@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -312,12 +309,6 @@
 		B3B26F041BC4DC6100D5A6D8 /* kmEmotionCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmEmotionCollectionViewCell.m; sourceTree = "<group>"; };
 		B3B7ABCF1BBE68B7001D075F /* kmMessageEmotionManagerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmMessageEmotionManagerView.h; sourceTree = "<group>"; };
 		B3B7ABD01BBE68B7001D075F /* kmMessageEmotionManagerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmMessageEmotionManagerView.m; sourceTree = "<group>"; };
-		B3B7ABD21BBE6912001D075F /* kmMessageMoreSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmMessageMoreSelector.h; sourceTree = "<group>"; };
-		B3B7ABD31BBE6912001D075F /* kmMessageMoreSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmMessageMoreSelector.m; sourceTree = "<group>"; };
-		B3BED2AC1BC65BEF00FB9ACD /* kmMoreMenuViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmMoreMenuViewCell.h; sourceTree = "<group>"; };
-		B3BED2AD1BC65BEF00FB9ACD /* kmMoreMenuViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmMoreMenuViewCell.m; sourceTree = "<group>"; };
-		B3BED2AF1BC661AD00FB9ACD /* kmMoreMenuViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kmMoreMenuViewFlowLayout.h; sourceTree = "<group>"; };
-		B3BED2B01BC661AD00FB9ACD /* kmMoreMenuViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kmMoreMenuViewFlowLayout.m; sourceTree = "<group>"; };
 		B3BED2B31BC6722F00FB9ACD /* aio_icons_camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "aio_icons_camera@2x.png"; sourceTree = "<group>"; };
 		B3BED2B41BC6722F00FB9ACD /* aio_icons_camera_disable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "aio_icons_camera_disable@2x.png"; sourceTree = "<group>"; };
 		B3BED2B51BC6722F00FB9ACD /* aio_icons_folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "aio_icons_folder@2x.png"; sourceTree = "<group>"; };
@@ -558,8 +549,6 @@
 				88A25F7519D8E01A00924534 /* JSQMessagesCollectionViewLayoutAttributes.m */,
 				B3B26F001BC4D94000D5A6D8 /* kmEmotionCollectionViewFlowLayout.h */,
 				B3B26F011BC4D94000D5A6D8 /* kmEmotionCollectionViewFlowLayout.m */,
-				B3BED2AF1BC661AD00FB9ACD /* kmMoreMenuViewFlowLayout.h */,
-				B3BED2B01BC661AD00FB9ACD /* kmMoreMenuViewFlowLayout.m */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -631,8 +620,6 @@
 				88A25FA219D8E01A00924534 /* JSQMessagesTypingIndicatorFooterView.xib */,
 				B3B7ABCF1BBE68B7001D075F /* kmMessageEmotionManagerView.h */,
 				B3B7ABD01BBE68B7001D075F /* kmMessageEmotionManagerView.m */,
-				B3B7ABD21BBE6912001D075F /* kmMessageMoreSelector.h */,
-				B3B7ABD31BBE6912001D075F /* kmMessageMoreSelector.m */,
 				B3A5DB0C1BC1568700C7C967 /* kmVoiceInput.h */,
 				B3A5DB0D1BC1568700C7C967 /* kmVoiceInput.m */,
 				B3E68D6E1BC38092001E8C89 /* kmClassicEmojiView.h */,
@@ -643,8 +630,6 @@
 				B3B26F041BC4DC6100D5A6D8 /* kmEmotionCollectionViewCell.m */,
 				B3FBAA2B1BC5686F009F2BAB /* kmMoreMenuView.h */,
 				B3FBAA2C1BC5686F009F2BAB /* kmMoreMenuView.m */,
-				B3BED2AC1BC65BEF00FB9ACD /* kmMoreMenuViewCell.h */,
-				B3BED2AD1BC65BEF00FB9ACD /* kmMoreMenuViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -964,10 +949,8 @@
 				88A25FC619D8E01A00924534 /* JSQMessagesAvatarImage.m in Sources */,
 				88A25FD519D8E01A00924534 /* JSQMessagesToolbarContentView.m in Sources */,
 				88A25FC119D8E01A00924534 /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
-				B3BED2B11BC661AD00FB9ACD /* kmMoreMenuViewFlowLayout.m in Sources */,
 				8885734A19DE540400E89D20 /* DemoSettingsViewController.m in Sources */,
 				88A25FC719D8E01A00924534 /* JSQMessagesBubbleImage.m in Sources */,
-				B3B7ABD41BBE6912001D075F /* kmMessageMoreSelector.m in Sources */,
 				88A25FC519D8E01A00924534 /* JSQMessage.m in Sources */,
 				B3B26F051BC4DC6100D5A6D8 /* kmEmotionCollectionViewCell.m in Sources */,
 				88A25FD719D8E01A00924534 /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
@@ -992,7 +975,6 @@
 				886C33FD19F4371E006B4997 /* JSQVideoMediaItem.m in Sources */,
 				B3B26EFF1BC4D7FE00D5A6D8 /* kmEmotion.m in Sources */,
 				B3B26EFC1BC4C69400D5A6D8 /* kmEmotionManager.m in Sources */,
-				B3BED2AE1BC65BEF00FB9ACD /* kmMoreMenuViewCell.m in Sources */,
 				88A25FBA19D8E01A00924534 /* JSQMessagesKeyboardController.m in Sources */,
 				B3FBAA281BC5661F009F2BAB /* kmMoreMenuItem.m in Sources */,
 				88A25FC019D8E01A00924534 /* JSQMessagesToolbarButtonFactory.m in Sources */,

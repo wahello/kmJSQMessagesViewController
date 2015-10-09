@@ -6,7 +6,6 @@ platform :ios, '7.0'
 inhibit_all_warnings!
 
 pod 'Masonry'
-pod 'UICollectionViewLeftAlignedLayout', '~> 1.0.0'
 
 pod 'JSQSystemSoundPlayer', '~> 2.0'
 

@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define kmMoreMenuItemWidth 60
-#define kmMoreMenuItemHeight 80
+
 
 @interface kmMoreMenuItem : NSObject
 

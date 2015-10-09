@@ -205,7 +205,7 @@ static CGFloat kmInputViewHeight = 216;
 		CGRect frame = CGRectMake(0, 0, CGRectGetWidth(_containView4CustomInput.bounds), kmInputViewHeight);
 		kmMoreMenuView *mmv = [[kmMoreMenuView alloc] initWithFrame:frame];
 		mmv.delegate = self;
-//		mmv.backgroundColor  = [UIColor whiteColor];
+		mmv.backgroundColor  = [UIColor whiteColor];
 //		mmv.alpha = 0.0f;
 		[_containView4CustomInput addSubview:mmv];
 		_moMenuView = mmv;
@@ -853,14 +853,6 @@ static CGFloat kmInputViewHeight = 216;
 		} break;
 		case kmInputToolBarContentViewStateMore: {
 			
-//			CGRect frame = self.moreSelector.frame;
-//			frame.origin.y = CGRectGetHeight(self.containView4CustomInput.frame);
-//			self.moreSelector.frame = frame;
-//			[self.containView4CustomInput bringSubviewToFront:self.moreSelector];
-//			[UIView animateWithDuration:0.4 animations:^{
-//				CGRect nf = CGRectMake(0, 0, CGRectGetWidth(self.moreSelector.frame), CGRectGetHeight(self.moreSelector.frame));
-//				self.moreSelector.frame = nf;
-//			}];
 			CGRect frame = self.moMenuView.frame;
 			frame.origin.y = CGRectGetHeight(self.containView4CustomInput.frame);
 			self.moMenuView.frame = frame;

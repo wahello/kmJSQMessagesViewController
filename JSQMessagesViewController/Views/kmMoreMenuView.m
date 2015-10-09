@@ -8,20 +8,82 @@
 
 #import "kmMoreMenuView.h"
 
-#import "kmMoreMenuViewCell.h"
-
-#import "kmMoreMenuViewFlowLayout.h"
 #import "kmMessageEmotionManagerView.h"
 
+static CGFloat const kmMenuPageControlHeight = 30;
 static NSString *const kmoreCollectionViewCellIdentifier = @"kmoreCollectionViewCellIdentifier";
 
-@interface kmMoreMenuView () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateLeftAlignedLayout>
+#define kmMoreMenuItemWidth 60
+#define kmMoreMenuItemHeight 80
 
-@property (nonatomic, strong) UICollectionView *moCollectionView;
+#define kmShareMenuPerRowItemCount ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 10 : 4)
+#define kmShareMenuPerColumn 2
+
+
+@interface kmMoreMenuItemView : UIView
+
+@property (nonatomic, weak) UIButton *menuItemButton;
+
+@property (nonatomic, weak) UILabel *menuItemTitleLabel;
+
+@end
+
+@implementation kmMoreMenuItemView
+
+- (void)configureView {
+	if (!_menuItemButton) {
+		UIButton *miButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+		miButton.frame = CGRectMake(0, 0, kmMoreMenuItemWidth, kmMoreMenuItemWidth);
+		miButton.backgroundColor = [UIColor clearColor];
+		[self addSubview:miButton];
+		self.menuItemButton = miButton;
+	}
+	
+	if (!_menuItemTitleLabel) {
+		UILabel *miLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.menuItemButton.frame), kmMoreMenuItemWidth, kmMoreMenuItemHeight - kmMoreMenuItemWidth)];
+		miLabel.backgroundColor = [UIColor clearColor];
+		miLabel.textColor = [UIColor blackColor];
+		miLabel.font = [UIFont systemFontOfSize:13];
+		miLabel.textAlignment = NSTextAlignmentCenter;
+		[self addSubview:miLabel];
+		self.menuItemTitleLabel = miLabel;
+	}
+}
+
+- (void)awakeFromNib {
+	[self configureView];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+	self = [super initWithFrame:frame];
+	if (self) {
+		[self configureView];
+	}
+	return self;
+}
+
+@end
+
+
+@interface kmMoreMenuView ()<UIScrollViewDelegate>
+
+@property (nonatomic, weak) UIScrollView *menuScrollView;
+
+@property (nonatomic, weak) UIPageControl *menuPageControl;
+
 
 @end
 
 @implementation kmMoreMenuView
+
+- (void)menuItemButtonAction:(UIButton*)sender {
+	if ([self.delegate respondsToSelector:@selector(didSelecteShareMenuItem:atIndex:)]) {
+		NSInteger index = sender.tag;
+		if (index < self.shareMenuItems.count) {
+			[self.delegate didSelecteShareMenuItem:[self.shareMenuItems objectAtIndex:index] atIndex:index];
+		}
+	}
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
 	self = [super initWithFrame:frame];
@@ -35,38 +97,42 @@ static NSString *const kmoreCollectionViewCellIdentifier = @"kmoreCollectionView
 	[self configureView];
 }
 
-//- (void)willMoveToSuperview:(UIView *)newSuperview {
-//	if (newSuperview) {
-//		[self reloadData];
-//	}
-//}
-
-- (void)dealloc {
-	self.shareMenuItems = nil;
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+	if (newSuperview) {
+		[self reloadData];
+	}
 }
 
+
 - (void)configureView {
+	self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	
-	if (!_moCollectionView) {
-		CGRect frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
-		UICollectionViewLeftAlignedLayout *layout = //[[UICollectionViewLeftAlignedLayout alloc] init];
-													[[kmMoreMenuViewFlowLayout alloc] init];
-		UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:frame
-															  collectionViewLayout:layout];
-		[collectionView registerClass:[kmMoreMenuViewCell class] forCellWithReuseIdentifier:kmoreCollectionViewCellIdentifier];
+	if (!_menuScrollView) {
+		CGRect frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds),
+								  CGRectGetHeight(self.bounds) - kmMenuPageControlHeight);
+		UIScrollView *mscrollview = [[UIScrollView alloc] initWithFrame:frame];
+		mscrollview.delegate = self;
+		mscrollview.canCancelContentTouches = NO;
+		mscrollview.delaysContentTouches = YES;
+		mscrollview.showsHorizontalScrollIndicator = NO;
+		mscrollview.showsVerticalScrollIndicator = NO;
+		[mscrollview setScrollsToTop:NO];
+		mscrollview.pagingEnabled = YES;
 		
-		collectionView.backgroundColor = [UIColor greenColor];
-		collectionView.delegate = self;
-		collectionView.dataSource = self;
-		collectionView.pagingEnabled = YES;
-		[collectionView setScrollEnabled:NO];
-		collectionView.showsHorizontalScrollIndicator = NO;
-		collectionView.showsVerticalScrollIndicator = NO;
-		collectionView.contentInset = UIEdgeInsetsMake(5, 10, 5, 10);
-		[self addSubview:collectionView];
-		self.moCollectionView = collectionView;
+		[self addSubview:mscrollview];
+		self.menuScrollView = mscrollview;
 	}
 	
+	if (!_menuPageControl) {
+		CGRect frame = CGRectMake(0, CGRectGetMaxY(self.menuScrollView.frame),
+								  CGRectGetWidth(self.bounds), kmMenuPageControlHeight);
+		UIPageControl *mpc = [[UIPageControl alloc] initWithFrame:frame];
+		mpc.backgroundColor = self.backgroundColor;
+		mpc.hidesForSinglePage = YES;
+		mpc.defersCurrentPageDisplay = YES;
+		[self addSubview:mpc];
+		self.menuPageControl = mpc;
+	}
 }
 
 - (void)setShareMenuItems:(NSArray *)shareMenuItems {
@@ -75,57 +141,88 @@ static NSString *const kmoreCollectionViewCellIdentifier = @"kmoreCollectionView
 		[self reloadData];
 	}
 }
+
 - (void)reloadData {
-	[self.moCollectionView reloadData];
-}
-
-#pragma mark -- UICollectionViewDatasource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-	return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-	return self.shareMenuItems.count;
-}
-
-- (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+	if (!_shareMenuItems.count) { return; }
 	
-	kmMoreMenuViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kmoreCollectionViewCellIdentifier forIndexPath:indexPath];
-	kmMoreMenuItem *anitem = [self.shareMenuItems objectAtIndex:indexPath.row];
-	cell.moreMenuItem = anitem;
+	[[self.menuScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 	
-	return cell;
-}
+	CGFloat scw = [[UIScreen mainScreen] bounds].size.width;
+	CGFloat paddingX = (scw - 60 * 4)/5.0;
+	CGFloat paddingY = (scw > 320) ? 13:10;
+	
+	for (kmMoreMenuItem *anItem in self.shareMenuItems) {
+		NSInteger index = [self.shareMenuItems indexOfObject:anItem];
+		NSInteger page = index / (kmShareMenuPerRowItemCount * kmShareMenuPerColumn);
+		CGRect miframe = [self getFrameWithPerRowItemCount:kmShareMenuPerRowItemCount
+														perColumItemCount:kmShareMenuPerColumn
+																itemWidth:kmoreMenuItemWidth
+															   itemHeight:kmoreMenuItemHeight
+																 paddingX:paddingX
+																 paddingY:paddingY
+																  atIndex:index
+																   onPage:page];
+		
+		kmMoreMenuItemView *mmItemView = [[kmMoreMenuItemView alloc] initWithFrame:miframe];
+		mmItemView.menuItemButton.tag = index;
+		[mmItemView.menuItemButton addTarget:self action:@selector(menuItemButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+		[mmItemView.menuItemButton setImage:anItem.normalIconImage forState:(UIControlStateNormal)];
+		[mmItemView.menuItemButton setImage:anItem.highlightIconImage forState:(UIControlStateHighlighted)];
+		mmItemView.menuItemTitleLabel.text = anItem.title;
 
-
-#pragma mark -- UICollectionViewDelegate
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-	if ([self.delegate respondsToSelector:@selector(didSelecteShareMenuItem:atIndex:)]) {
-		kmMoreMenuItem *aitem = [self.shareMenuItems objectAtIndex:indexPath.row];
-		[self.delegate didSelecteShareMenuItem:aitem atIndex:indexPath.row];
+		[self.menuScrollView addSubview:mmItemView];
 	}
+	
+	self.menuPageControl.numberOfPages = (self.shareMenuItems.count / (kmShareMenuPerRowItemCount * 2) + (self.shareMenuItems.count % (kmShareMenuPerRowItemCount * 2)?1:0));
+	[self.menuScrollView setContentSize:CGSizeMake(self.menuPageControl.numberOfPages * CGRectGetWidth(self.bounds),
+												   CGRectGetHeight(self.menuScrollView.bounds))];
+	
 }
 
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-//	CGSize size = CGSizeMake(kmoreMenuItemWidth, kmoreMenuItemHeight);
-//	return size;
-//}
-//
-//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-//	NSInteger count = [[UIScreen mainScreen] bounds].size.width/(kmoreMenuItemHeight + kmoreMiniLineSpacing);
-//	CGFloat spacing = [[UIScreen mainScreen] bounds].size.width/count - kmoreMenuItemWidth;
-//	return spacing;
-//}
-//
-//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-//	
-//	NSInteger count = [[UIScreen mainScreen] bounds].size.width/(kmoreMenuItemHeight + kmoreMiniLineSpacing);
-//	CGFloat spacing = [[UIScreen mainScreen] bounds].size.width/count - kmoreMenuItemWidth;
-////	self.minimumInteritemSpacing = spacing;
-//	return UIEdgeInsetsMake(10, spacing/2, 0, spacing/2);
-//}
+- (void)dealloc {
+	self.shareMenuItems = nil;
+	self.menuScrollView.delegate = nil;
+	self.menuScrollView = nil;
+	self.menuPageControl = nil;
+}
+
+/**
+ *  通过目标的参数，获取一个grid布局
+ *
+ *  @param perRowItemCount   每行有多少列
+ *  @param perColumItemCount 每列有多少行
+ *  @param itemWidth         gridItem的宽度
+ *  @param itemHeight        gridItem的高度
+ *  @param paddingX          gridItem之间的X轴间隔
+ *  @param paddingY          gridItem之间的Y轴间隔
+ *  @param index             某个gridItem所在的index序号
+ *  @param page              某个gridItem所在的页码
+ *
+ *  @return 返回一个已经处理好的gridItem frame
+ */
+- (CGRect)getFrameWithPerRowItemCount:(NSInteger)perRowItemCount
+					perColumItemCount:(NSInteger)perColumItemCount
+							itemWidth:(CGFloat)itemWidth
+						   itemHeight:(NSInteger)itemHeight
+							 paddingX:(CGFloat)paddingX
+							 paddingY:(CGFloat)paddingY
+							  atIndex:(NSInteger)index
+							   onPage:(NSInteger)page {
+	CGRect itemFrame =
+	CGRectMake((index % perRowItemCount) * (itemWidth + paddingX) + paddingX + (page * CGRectGetWidth(self.bounds)),
+			   ((index / perRowItemCount) - perColumItemCount * page) * (itemHeight + paddingY) + paddingY,
+			   itemWidth,
+			   itemHeight);
+	return itemFrame;
+}
+
+#pragma mark - UIScrollView delegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+	CGFloat pageWidth = CGRectGetWidth(scrollView.bounds);
+	NSInteger currentPage = floor((scrollView.contentOffset.x - pageWidth/2)/pageWidth) + 1;
+	[self.menuPageControl setCurrentPage:currentPage];
+}
 
 
 @end

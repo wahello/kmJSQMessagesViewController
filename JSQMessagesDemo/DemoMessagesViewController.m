@@ -135,20 +135,21 @@
 		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
 		[moreMenuItems addObject:shareMenuItem];
 	}
-	for (NSDictionary *tdict in tmoreArr) {
-		NSString *imgname = [tdict objectForKey:@"image"];
-		NSString *ttitle = [tdict objectForKey:@"title"];
-		NSString *hlimgname = [tdict objectForKey:@"image_hl"];
-		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
-		[moreMenuItems addObject:shareMenuItem];
-	}
-	for (NSDictionary *tdict in tmoreArr) {
-		NSString *imgname = [tdict objectForKey:@"image"];
-		NSString *ttitle = [tdict objectForKey:@"title"];
-		NSString *hlimgname = [tdict objectForKey:@"image_hl"];
-		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
-		[moreMenuItems addObject:shareMenuItem];
-	}
+//	for (NSDictionary *tdict in tmoreArr) {
+//		NSString *imgname = [tdict objectForKey:@"image"];
+//		NSString *ttitle = [tdict objectForKey:@"title"];
+//		NSString *hlimgname = [tdict objectForKey:@"image_hl"];
+//		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
+//		[moreMenuItems addObject:shareMenuItem];
+//	}
+//	for (NSDictionary *tdict in tmoreArr) {
+//		NSString *imgname = [tdict objectForKey:@"image"];
+//		NSString *ttitle = [tdict objectForKey:@"title"];
+//		NSString *hlimgname = [tdict objectForKey:@"image_hl"];
+//		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
+//		[moreMenuItems addObject:shareMenuItem];
+//	}
+//	
 	self.moMenuItems = moreMenuItems;
 	self.moMenuView.shareMenuItems = self.moMenuItems;
 	
