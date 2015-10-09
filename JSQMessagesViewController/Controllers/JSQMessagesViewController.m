@@ -184,7 +184,6 @@ static CGFloat kmInputViewHeight = 216;
 		make.bottom.equalTo(self.view.mas_bottom);
 		
 	}];
-	//cv.backgroundColor = [UIColor greenColor];
 	_containView4CustomInput = cv;
 	
 	kmMessageEmotionManagerView *emger = [[kmMessageEmotionManagerView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
@@ -194,11 +193,6 @@ static CGFloat kmInputViewHeight = 216;
 	[cv addSubview:emger];
 	_emotionManagerView = emger;
 	
-//	kmMessageMoreSelector *mmsl = [[kmMessageMoreSelector alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cv.frame), CGRectGetHeight(cv.frame))];
-//	mmsl.backgroundColor = [UIColor whiteColor];
-//	[cv addSubview:mmsl];
-//	_moreSelector = mmsl;
-	
 }
 - (kmMoreMenuView*)moMenuView {
 	if (!_moMenuView) {
@@ -206,7 +200,6 @@ static CGFloat kmInputViewHeight = 216;
 		kmMoreMenuView *mmv = [[kmMoreMenuView alloc] initWithFrame:frame];
 		mmv.delegate = self;
 		mmv.backgroundColor  = [UIColor whiteColor];
-//		mmv.alpha = 0.0f;
 		[_containView4CustomInput addSubview:mmv];
 		_moMenuView = mmv;
 	}
