@@ -135,21 +135,7 @@
 		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
 		[moreMenuItems addObject:shareMenuItem];
 	}
-//	for (NSDictionary *tdict in tmoreArr) {
-//		NSString *imgname = [tdict objectForKey:@"image"];
-//		NSString *ttitle = [tdict objectForKey:@"title"];
-//		NSString *hlimgname = [tdict objectForKey:@"image_hl"];
-//		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
-//		[moreMenuItems addObject:shareMenuItem];
-//	}
-//	for (NSDictionary *tdict in tmoreArr) {
-//		NSString *imgname = [tdict objectForKey:@"image"];
-//		NSString *ttitle = [tdict objectForKey:@"title"];
-//		NSString *hlimgname = [tdict objectForKey:@"image_hl"];
-//		kmMoreMenuItem *shareMenuItem = [[kmMoreMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:imgname]  highlightIconImage:[UIImage imageNamed:hlimgname] title:ttitle];
-//		[moreMenuItems addObject:shareMenuItem];
-//	}
-//	
+	
 	self.moMenuItems = moreMenuItems;
 	self.moMenuView.shareMenuItems = self.moMenuItems;
 	
@@ -166,6 +152,10 @@
 			emgr.emotionFileSuffix = @"@2x.png";
 			NSString *cEmojibPath = [[NSBundle mainBundle].bundlePath stringByAppendingPathComponent:@"classicEmoji.bundle"];
 			emgr.emotionResourceDir = [cEmojibPath lastPathComponent];
+			self.emotionManagerView.classicEmojiDir = [cEmojibPath lastPathComponent];
+			self.plist4classicEmojiKeys = @"classicEmojiKeys";
+			self.plist4classicEmojiKeyValue = @"classicEmoji";
+			
 		}
 		else {
 			//TODO
@@ -753,6 +743,29 @@
 - (void)didSelecteShareMenuItem:(kmMoreMenuItem *)shareMenuItem atIndex:(NSInteger)index {
 	NSLog(@" %d ", index);
 	
+}
+
+
+#pragma mark -- kmMessageEmotionManagerView delegate
+
+- (void)didSelectEmotion:(kmEmotion *)emotion atIndexPath:(NSIndexPath *)indexPath {
+	NSLog(@" --- ====-=++ %@ ", indexPath);
+	
+}
+
+- (void)didSelectedEmoji:(NSString *)emojiName isDele:(BOOL)isdele {
+	NSLog(@" emojiName --=---===--- %@ ", emojiName);
+	if (!isdele && emojiName) {
+		NSString *otext = [NSString stringWithFormat:@"%@%@", self.inputToolbar.contentView.textView.text, emojiName];
+		[self.inputToolbar.contentView.textView setText:otext];
+		
+	} else {
+		
+	}
+}
+
+- (void)emojiSendButtonClicked {
+	NSLog(@" --- emoji button send ");
 }
 
 @end

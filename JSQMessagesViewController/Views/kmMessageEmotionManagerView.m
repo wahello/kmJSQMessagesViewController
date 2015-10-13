@@ -157,6 +157,13 @@
 		self.emotionCollectionView.hidden = YES;
 		self.emojiContainerView.hidden = NO;
 		
+		NSString *inputedText = [self.emotionDelegate textThatInputed];
+		if (!inputedText || [inputedText length] == 0) {
+			[self.emotionSectionBar changeSendButtonBackgroundColor:[UIColor whiteColor] titleColor:[UIColor darkGrayColor]];
+		} else {
+			[self.emotionSectionBar changeSendButtonBackgroundColor:[UIColor blueColor] titleColor:[UIColor whiteColor]];
+		}
+		
 	} else {
 		self.emojiContainerView.hidden = YES;
 		self.emotionCollectionView.hidden = NO;

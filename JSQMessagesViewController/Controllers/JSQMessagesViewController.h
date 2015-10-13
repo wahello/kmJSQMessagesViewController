@@ -185,6 +185,9 @@
 @property (weak, nonatomic, readonly) kmMoreMenuView *moMenuView;
 @property (weak, nonatomic, readonly) kmVoiceInput *voiceInput;
 
+@property (copy, nonatomic) NSString *regex4classicEmoji;
+
+
 #pragma mark - Class methods
 
 /**
@@ -280,5 +283,6 @@
  *  @param animated Pass `YES` if you want to animate scrolling, `NO` if it should be immediate.
  */
 - (void)scrollToBottomAnimated:(BOOL)animated;
+
 
 @end

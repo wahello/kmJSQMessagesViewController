@@ -35,6 +35,7 @@
 
 @property (nonatomic, weak) id<kmMessageEmotionManagerViewDelegate> emotionDelegate;
 
+@property (nonatomic, strong) NSString *classicEmojiDir;
 
 - (void)reloadData;
 

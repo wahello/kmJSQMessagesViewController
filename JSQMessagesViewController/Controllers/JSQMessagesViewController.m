@@ -43,6 +43,7 @@
 
 #import "Masonry.h"
 
+#import "NSString+kmClassicEmojiDetector.h"
 
 static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObservingContext;
 
@@ -744,6 +745,13 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 - (void)didSelectedEmoji:(NSString *)emojiName isDele:(BOOL)isdele {
 	NSLog(@" emojiName --=== %@ ", emojiName);
+	if (!isdele && emojiName) {
+		NSString *otext = [NSString stringWithFormat:@"%@%@", self.inputToolbar.contentView.textView.text, emojiName];
+		[self.inputToolbar.contentView.textView setText:otext];
+		
+	} else {
+		
+	}
 }
 
 - (NSString *)textThatInputed {
@@ -945,6 +953,21 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 			   senderDisplayName:self.senderDisplayName
 							date:[NSDate date]];
 		return NO;
+	} else if ( [text isEqualToString:@""]) {
+		NSRange selectedRange = [textView selectedRange];
+		NSLog(@" selectedRange %@ ", NSStringFromRange(selectedRange));
+		
+		NSString *intext = textView.text;
+		if (selectedRange.length > 0) {
+			return YES;
+		}
+		NSInteger loc = 0;
+		BOOL res = [intext detectEmojiAtBackspaceLocation:&loc selectedRange:selectedRange emojiDirectory:self.emotionManagerView.classicEmojiDir  emojiKeysFile:self.plist4classicEmojiKeys];
+		if (!res) {
+			intext = [intext substringToIndex:loc];
+			[self.inputToolbar.contentView.textView setText:intext];
+		}
+		return res;
 	}
 	return YES;
 }
