@@ -285,5 +285,13 @@ const NSInteger kmMoreSelectButtonTag = 1003;
 	return res;
 }
 
+- (void)resetInputViewState {
+	_inputToolState = kmInputToolBarContentViewStateText;
+	if (_leftBarButtonItem) {
+		_leftBarButtonItem.selected = NO;
+	}
+	_rightBarButtonItem.selected = NO;
+	_rightBarButtonItemB.selected = NO;
+}
 
 @end

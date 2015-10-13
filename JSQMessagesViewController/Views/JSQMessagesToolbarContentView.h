@@ -143,5 +143,6 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
 
 - (kmInputToolBarContentViewState)toggleKeyboard:(UIButton*)button;
 
+- (void)resetInputViewState;
 
 @end

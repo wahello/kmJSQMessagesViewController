@@ -46,8 +46,6 @@
 
 static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObservingContext;
 
-static CGFloat kmInputViewHeight = 216;
-
 @interface JSQMessagesViewController () <JSQMessagesInputToolbarDelegate,
                                          JSQMessagesKeyboardControllerDelegate>
 
@@ -193,6 +191,11 @@ static CGFloat kmInputViewHeight = 216;
 	[cv addSubview:emger];
 	_emotionManagerView = emger;
 	
+#if DEBUG == 1
+//	cv.backgroundColor = [UIColor clearColor];
+//	emger.backgroundColor = [UIColor clearColor];
+#endif
+	
 }
 - (kmMoreMenuView*)moMenuView {
 	if (!_moMenuView) {
@@ -202,6 +205,9 @@ static CGFloat kmInputViewHeight = 216;
 		mmv.backgroundColor  = [UIColor whiteColor];
 		[_containView4CustomInput addSubview:mmv];
 		_moMenuView = mmv;
+#if DEBUG == 1
+//		mmv.backgroundColor = [UIColor clearColor];
+#endif
 	}
 	return _moMenuView;
 }
@@ -309,6 +315,7 @@ static CGFloat kmInputViewHeight = 216;
 
     [self jsq_updateKeyboardTriggerPoint];
 	_containView4CustomInput.hidden = NO;
+	[self km_updateCustomInputViewTriggerPoint];
 	
 }
 
@@ -768,6 +775,7 @@ static CGFloat kmInputViewHeight = 216;
 {
 	BOOL showKeyboard = istate == kmInputToolBarContentViewStateText;
 	NSLog(@" ---- ==== voice input kb showed:%@", showKeyboard?@"yes":@"no");
+	
 	if (showKeyboard) {
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
@@ -785,6 +793,9 @@ static CGFloat kmInputViewHeight = 216;
 			   inputBarState:(kmInputToolBarContentViewState)istate
 {
 	BOOL showKeyboard = istate == kmInputToolBarContentViewStateText;
+	toolbar.contentView.textView.inputView = nil;
+	[self postCustomWillShowOrHide:NO];
+	
 	if (showKeyboard) {
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
@@ -802,6 +813,9 @@ static CGFloat kmInputViewHeight = 216;
 			   inputBarState:(kmInputToolBarContentViewState)istate
 {
 	BOOL showKeyboard = istate == kmInputToolBarContentViewStateText;
+	toolbar.contentView.textView.inputView = nil;
+	[self postCustomWillShowOrHide:NO];
+	
 	if (showKeyboard) {
 		[toolbar.contentView.textView becomeFirstResponder];
 	} else {
@@ -857,6 +871,7 @@ static CGFloat kmInputViewHeight = 216;
 			
 		} break;
 		case kmInputToolBarContentViewStateText: {
+			
 			
 		} break;
 		case kmInputToolBarContentViewStateNone: {
@@ -1006,6 +1021,24 @@ static CGFloat kmInputViewHeight = 216;
 
 #pragma mark - Keyboard controller delegate
 
+- (void)resetInputToolbar:(JSQMessagesKeyboardController *)keyboardController {
+	[self.inputToolbar.contentView resetInputViewState];
+}
+
+- (void)keyboardController:(JSQMessagesKeyboardController *)keyboardController customInputViewDidChangeFrame:(CGRect)customInputViewFrame {
+	if ( [self.keyboardController customInputViewIsVisible] && self.toolbarBottomLayoutGuide.constant < 0.00000001 && self.toolbarBottomLayoutGuide.constant > -0.00000001) {
+		return;
+	}
+	CGFloat heightFromBottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(customInputViewFrame);
+	
+	heightFromBottom = MAX(0.0f, heightFromBottom);
+	[self jsq_setToolbarBottomLayoutGuideConstant:heightFromBottom];
+	
+	CGRect frame = self.containView4CustomInput.frame;
+	frame.origin.y = CGRectGetMaxY(self.inputToolbar.frame);
+	self.containView4CustomInput.frame = frame;
+}
+
 - (void)keyboardController:(JSQMessagesKeyboardController *)keyboardController keyboardDidChangeFrame:(CGRect)keyboardFrame
 {
     if (![self.inputToolbar.contentView.textView isFirstResponder] && self.toolbarBottomLayoutGuide.constant == 0.0f) {
@@ -1035,6 +1068,10 @@ static CGFloat kmInputViewHeight = 216;
 - (void)jsq_updateKeyboardTriggerPoint
 {
     self.keyboardController.keyboardTriggerPoint = CGPointMake(0.0f, CGRectGetHeight(self.inputToolbar.bounds));
+}
+
+- (void)km_updateCustomInputViewTriggerPoint {
+	self.keyboardController.customInputViewTriggerPoint = CGPointMake(0.0f, CGRectGetHeight(self.inputToolbar.bounds));
 }
 
 #pragma mark - Gesture recognizers
@@ -1112,7 +1149,7 @@ static CGFloat kmInputViewHeight = 216;
         dy = toolbarOriginY - (self.topLayoutGuide.length + self.topContentAdditionalInset);
         [self jsq_scrollComposerTextViewToBottomAnimated:YES];
     }
-
+	
     [self jsq_adjustInputToolbarHeightConstraintByDelta:dy];
 
     [self jsq_updateKeyboardTriggerPoint];

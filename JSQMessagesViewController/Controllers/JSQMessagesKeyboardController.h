@@ -42,6 +42,8 @@ FOUNDATION_EXPORT NSString * const JSQMessagesKeyboardControllerUserInfoKeyKeybo
 FOUNDATION_EXPORT NSString *const kmCustomInputviewDidShow;
 FOUNDATION_EXPORT NSString *const kmCustomInputviewDidHide;
 
+FOUNDATION_EXPORT CGFloat const kmInputViewHeight;
+
 /**
  *  The `JSQMessagesKeyboardControllerDelegate` protocol defines methods that 
  *  allow you to respond to the frame change events of the system keyboard.
@@ -60,6 +62,10 @@ FOUNDATION_EXPORT NSString *const kmCustomInputviewDidHide;
  *  @param keyboardFrame      The new frame of the keyboard in the coordinate system of the `contextView`.
  */
 - (void)keyboardController:(JSQMessagesKeyboardController *)keyboardController keyboardDidChangeFrame:(CGRect)keyboardFrame;
+
+- (void)keyboardController:(JSQMessagesKeyboardController *)keyboardController customInputViewDidChangeFrame:(CGRect)keyboardFrame;
+
+- (void)resetInputToolbar:(JSQMessagesKeyboardController *)keyboardController;
 
 @end
 
@@ -107,6 +113,8 @@ FOUNDATION_EXPORT NSString *const kmCustomInputviewDidHide;
  */
 @property (assign, nonatomic, readonly) BOOL keyboardIsVisible;
 
+@property (assign, nonatomic, readonly) BOOL customInputViewIsVisible;
+
 /**
  *  Returns the current frame of the keyboard if it is visible, otherwise `CGRectNull`.
  */
@@ -136,5 +144,7 @@ FOUNDATION_EXPORT NSString *const kmCustomInputviewDidHide;
  *  Tells the keyboard controller that it should end listening for system keyboard notifications.
  */
 - (void)endListeningForKeyboard;
+
+@property (assign, nonatomic) CGPoint customInputViewTriggerPoint;
 
 @end

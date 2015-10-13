@@ -32,10 +32,11 @@ NSString * const JSQMessagesKeyboardControllerUserInfoKeyKeyboardDidChangeFrame 
 NSString * const kmCustomInputviewDidShow = @"kmCustomInputviewDidShow";
 NSString * const kmCustomInputviewDidHide = @"kmCustomInputviewDidHide";
 
+const CGFloat kmInputViewHeight = 216;
+
 static void * kJSQMessagesKeyboardControllerKeyValueObservingContext = &kJSQMessagesKeyboardControllerKeyValueObservingContext;
 
 typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
-
 
 
 @interface JSQMessagesKeyboardController () <UIGestureRecognizerDelegate>
@@ -43,6 +44,11 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
 @property (assign, nonatomic) BOOL jsq_isObserving;
 
 @property (weak, nonatomic) UIView *keyboardView;
+
+@property (assign, nonatomic) BOOL km_customInput_isObserving;
+
+@property (weak, nonatomic) UIView *cinputView;
+
 
 - (void)jsq_registerForNotifications;
 - (void)jsq_unregisterForNotifications;
@@ -86,6 +92,7 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
         _panGestureRecognizer = panGestureRecognizer;
         _delegate = delegate;
         _jsq_isObserving = NO;
+		_km_customInput_isObserving = NO;
     }
     return self;
 }
@@ -94,21 +101,40 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
 {
     [self jsq_removeKeyboardFrameObserver];
     [self jsq_unregisterForNotifications];
+	[self km_removeCustomInputViewFrameObserver];
+	[self km_unregisterForCustomNotifications];
+	
     _textView = nil;
     _contextView = nil;
     _panGestureRecognizer = nil;
     _delegate = nil;
     _keyboardView = nil;
+	
+	_cinputView = nil;
 }
 
 #pragma mark - Setters
+
+- (void)setCinputView:(UIView *)cinputView {
+	if (_cinputView) {
+		[self km_removeCustomInputViewFrameObserver];
+	}
+	_cinputView = cinputView;
+	
+	if (cinputView && !_km_customInput_isObserving) {
+		[_cinputView addObserver:self
+					  forKeyPath:NSStringFromSelector(@selector(frame))
+						 options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:kJSQMessagesKeyboardControllerKeyValueObservingContext];
+		
+		_km_customInput_isObserving = YES;
+	}
+}
 
 - (void)setKeyboardView:(UIView *)keyboardView
 {
     if (_keyboardView) {
         [self jsq_removeKeyboardFrameObserver];
     }
-
     _keyboardView = keyboardView;
 
     if (keyboardView && !_jsq_isObserving) {
@@ -126,6 +152,10 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
 - (BOOL)keyboardIsVisible
 {
     return self.keyboardView != nil;
+}
+
+- (BOOL)customInputViewIsVisible {
+	return  self.cinputView != nil;
 }
 
 - (CGRect)currentKeyboardFrame
@@ -146,6 +176,7 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
     }
 
     [self jsq_registerForNotifications];
+	[self km_registerForCustomNotifications];
 }
 
 - (void)endListeningForKeyboard
@@ -183,6 +214,15 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
                                                object:nil];
 }
 
+- (void)jsq_unregisterForNotifications
+{
+//	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidChangeFrameNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+}
+
 //--added keyeMyria
 - (void)km_registerForCustomNotifications
 {
@@ -200,33 +240,78 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
 
 - (void)km_unregisterForCustomNotifications
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+//	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kmCustomInputviewDidShow object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kmCustomInputviewDidHide object:nil];
 }
 
 - (void)km_didReceiveCustomInputViewDidShowNotification:(NSNotification*)notification {
+	self.cinputView = self.textView.superview.superview;
+	
 	[self.panGestureRecognizer addTarget:self action:@selector(km_handlePanGestureRecognizer:)];
 }
 
 - (void)km_didReceiveCustomInputViewDidHideNotification:(NSNotification*)notification {
+	self.cinputView = nil;
 	[self.panGestureRecognizer removeTarget:self action:@selector(km_handlePanGestureRecognizer:)];
-}
-
-- (void)jsq_unregisterForNotifications
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)km_handlePanGestureRecognizer:(UIPanGestureRecognizer*)pan {
 	
+	CGPoint touch = [pan locationInView:self.contextView.window];
+	CGFloat contextViewWindowHeight = CGRectGetHeight(self.contextView.window.frame);
+	if ([UIDevice jsq_isCurrentDeviceBeforeiOS8]) {
+		if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+			contextViewWindowHeight = CGRectGetWidth(self.contextView.window.frame);
+		}
+	}
+	CGFloat customViewHeight = CGRectGetHeight(self.cinputView.frame);
+	CGFloat dragThresholdY = (contextViewWindowHeight - customViewHeight - self.customInputViewTriggerPoint.y);
+	
+	CGRect newCustomInputviewFrame = self.cinputView.frame;
+	
+	BOOL userIsDraggingNearThresholdForDismissing = (touch.y > dragThresholdY);
+	
+	self.cinputView.userInteractionEnabled = !userIsDraggingNearThresholdForDismissing;
+//	NSLog(@" %d == = ==  %@ ", pan.state, NSStringFromCGRect(newCustomInputviewFrame));
 	switch (pan.state) {
 		case UIGestureRecognizerStateChanged: {
-			
+			newCustomInputviewFrame.origin.y = touch.y + self.customInputViewTriggerPoint.y;
+			newCustomInputviewFrame.origin.y = MIN(newCustomInputviewFrame.origin.y, contextViewWindowHeight);
+			newCustomInputviewFrame.origin.y = MAX(newCustomInputviewFrame.origin.y, contextViewWindowHeight - customViewHeight);
+			if (CGRectGetMinY(newCustomInputviewFrame) == CGRectGetMinY(self.cinputView.frame)) {
+				return;
+			}
+			[UIView animateWithDuration:0.4
+								  delay:0
+								options:(UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionTransitionNone) animations:^{
+									self.cinputView.frame = newCustomInputviewFrame;
+									
+								} completion:nil];
 		}
 			break;
 		case UIGestureRecognizerStateEnded:
 		case UIGestureRecognizerStateCancelled:
 		case UIGestureRecognizerStateFailed: {
+			BOOL customInputViewIsHidden = (CGRectGetMaxY(self.cinputView.frame) >= contextViewWindowHeight);
 			
+			if (customInputViewIsHidden) {
+				[self km_resetCustomInputViewAndTextView];
+				return;
+			}
+			CGPoint velocity = [pan velocityInView:self.contextView];
+			BOOL userIsScrollingDown = (velocity.y > 0.0f);
+			BOOL shouldHide = (userIsScrollingDown && userIsDraggingNearThresholdForDismissing);
+			
+			newCustomInputviewFrame.origin.y = shouldHide ? contextViewWindowHeight:(contextViewWindowHeight - customViewHeight);
+			[UIView animateWithDuration:0.25 delay:0.0 options:(UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationCurveEaseOut) animations:^{
+				self.cinputView.frame = newCustomInputviewFrame;
+			} completion:^(BOOL finished) {
+				self.cinputView.userInteractionEnabled = !shouldHide;
+				if (shouldHide) {
+					[self km_resetCustomInputViewAndTextView];
+				}
+			}];
 		}
 			break;
 		default:
@@ -237,6 +322,7 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
 
 - (void)jsq_didReceiveKeyboardDidShowNotification:(NSNotification *)notification
 {
+	self.cinputView = nil;
     self.keyboardView = self.textView.inputAccessoryView.superview;
     [self jsq_setKeyboardViewHidden:NO];
 
@@ -298,6 +384,17 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
 
 #pragma mark - Utilities
 
+- (void)km_resetCustomInputViewAndTextView {
+	self.cinputView = nil;
+	[self.delegate resetInputToolbar:self];
+	[self km_removeCustomInputViewFrameObserver];
+	[self.textView resignFirstResponder];
+}
+
+- (void)km_notifyCustomInputViewFrameNotificationForFrame:(CGRect)frame {
+	[self.delegate keyboardController:self customInputViewDidChangeFrame:frame];
+}
+
 - (void)jsq_setKeyboardViewHidden:(BOOL)hidden
 {
     self.keyboardView.hidden = hidden;
@@ -327,7 +424,6 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
     if (context == kJSQMessagesKeyboardControllerKeyValueObservingContext) {
 
         if (object == self.keyboardView && [keyPath isEqualToString:NSStringFromSelector(@selector(frame))]) {
-
             CGRect oldKeyboardFrame = [[change objectForKey:NSKeyValueChangeOldKey] CGRectValue];
             CGRect newKeyboardFrame = [[change objectForKey:NSKeyValueChangeNewKey] CGRectValue];
 
@@ -337,8 +433,19 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
             
             CGRect keyboardEndFrameConverted = [self.contextView convertRect:newKeyboardFrame
                                                                     fromView:self.keyboardView.superview];
+			
             [self jsq_notifyKeyboardFrameNotificationForFrame:keyboardEndFrameConverted];
-        }
+		} else if (object == self.cinputView && [keyPath isEqualToString:NSStringFromSelector(@selector(frame))]) {
+			CGRect oldCustomInputViewFrame = [[change objectForKey:NSKeyValueChangeOldKey] CGRectValue];
+			CGRect newCustomInputViewFrame = [[change objectForKey:NSKeyValueChangeNewKey] CGRectValue];
+			
+			if (CGRectEqualToRect(newCustomInputViewFrame, oldCustomInputViewFrame) || CGRectIsNull(newCustomInputViewFrame)) {
+				NSLog(@" --===+++++ ");
+				return;
+			}
+			//TODO
+			[self km_notifyCustomInputViewFrameNotificationForFrame:newCustomInputViewFrame];
+		}
     }
 }
 
@@ -356,6 +463,19 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
     @catch (NSException * __unused exception) { }
 
     _jsq_isObserving = NO;
+}
+
+- (void)km_removeCustomInputViewFrameObserver {
+	if (!_km_customInput_isObserving) {
+		return;
+	}
+	@try {
+		[_cinputView removeObserver:self
+						 forKeyPath:NSStringFromSelector(@selector(frame))
+							context:kJSQMessagesKeyboardControllerKeyValueObservingContext];
+	}
+	@catch (NSException *__unused exception) { }
+	_km_customInput_isObserving = NO;
 }
 
 #pragma mark - Pan gesture recognizer
@@ -384,7 +504,7 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
     BOOL userIsDraggingNearThresholdForDismissing = (touch.y > dragThresholdY);
 
     self.keyboardView.userInteractionEnabled = !userIsDraggingNearThresholdForDismissing;
-
+	
     switch (pan.state) {
         case UIGestureRecognizerStateChanged:
         {
