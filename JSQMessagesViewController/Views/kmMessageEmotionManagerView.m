@@ -2,7 +2,7 @@
 //  kmMessageEmojiManager.m
 //  JSQMessages
 //
-//  Created by dulian on 10/2/15.
+//  Created by Keye Myria on 10/2/15.
 //  Copyright © 2015 Hexed Bits. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  kmClassicEmojiView.h
 //  JSQMessages
 //
-//  Created by dulian on 10/6/15.
+//  Created by Keye Myria on 10/6/15.
 //  Copyright © 2015 Hexed Bits. All rights reserved.
 //
 
