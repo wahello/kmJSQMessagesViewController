@@ -43,7 +43,7 @@
 
 #import "Masonry.h"
 
-#import "NSString+kmClassicEmojiDetector.h"
+
 
 static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObservingContext;
 
@@ -947,15 +947,13 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 	if ([text isEqualToString:@"\n"]) {
 		[self didPressSendButton:nil
-				 withMessageText:textView.text
-	//							[self jsq_currentlyComposedMessageText]
+				 withMessageText:[textView.text jsq_stringByTrimingWhitespace]
 						senderId:self.senderId
 			   senderDisplayName:self.senderDisplayName
 							date:[NSDate date]];
 		return NO;
 	} else if ( [text isEqualToString:@""]) {
 		NSRange selectedRange = [textView selectedRange];
-		NSLog(@" selectedRange %@ ", NSStringFromRange(selectedRange));
 		
 		NSString *intext = textView.text;
 		if (selectedRange.length > 0) {

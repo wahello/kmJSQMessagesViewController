@@ -26,7 +26,7 @@
 #import "kmMessageEmotionManagerView.h"
 #import "kmMoreMenuView.h"
 #import "kmVoiceInput.h"
-
+#import "NSString+kmClassicEmojiDetector.h"
 
 /**
  *  The `JSQMessagesViewController` class is an abstract class that represents a view controller whose content consists of

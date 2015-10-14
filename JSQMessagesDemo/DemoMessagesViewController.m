@@ -754,18 +754,38 @@
 }
 
 - (void)didSelectedEmoji:(NSString *)emojiName isDele:(BOOL)isdele {
-	NSLog(@" emojiName --=---===--- %@ ", emojiName);
+	
 	if (!isdele && emojiName) {
 		NSString *otext = [NSString stringWithFormat:@"%@%@", self.inputToolbar.contentView.textView.text, emojiName];
 		[self.inputToolbar.contentView.textView setText:otext];
 		
-	} else {
-		
+	} else if (isdele) {
+
+		NSInteger loc = 0;
+		NSString *intext = self.inputToolbar.contentView.textView.text;
+		NSRange selectedRange = NSMakeRange(intext.length, 0);
+		BOOL res = [intext detectEmojiAtBackspaceLocation:&loc selectedRange:selectedRange emojiDirectory:self.emotionManagerView.classicEmojiDir  emojiKeysFile:self.plist4classicEmojiKeys];
+		if (!res) {
+			intext = [intext substringToIndex:loc];
+			[self.inputToolbar.contentView.textView setText:intext];
+		}
+		else {
+			if (loc < NSNotFound) {
+				intext = [intext substringToIndex:loc];
+				[self.inputToolbar.contentView.textView setText:intext];
+			}
+		}
 	}
 }
 
 - (void)emojiSendButtonClicked {
 	NSLog(@" --- emoji button send ");
+	
+	[self didPressSendButton:nil
+			 withMessageText:[self.inputToolbar.contentView.textView.text jsq_stringByTrimingWhitespace]
+					senderId:self.senderId
+		   senderDisplayName:self.senderDisplayName
+						date:[NSDate date]];
 }
 
 @end
