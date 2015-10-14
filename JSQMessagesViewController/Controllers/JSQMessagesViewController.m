@@ -192,11 +192,6 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 	[cv addSubview:emger];
 	_emotionManagerView = emger;
 	
-#if DEBUG == 1
-//	cv.backgroundColor = [UIColor clearColor];
-//	emger.backgroundColor = [UIColor clearColor];
-#endif
-	
 }
 - (kmMoreMenuView*)moMenuView {
 	if (!_moMenuView) {
@@ -206,9 +201,6 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 		mmv.backgroundColor  = [UIColor whiteColor];
 		[_containView4CustomInput addSubview:mmv];
 		_moMenuView = mmv;
-#if DEBUG == 1
-//		mmv.backgroundColor = [UIColor clearColor];
-#endif
 	}
 	return _moMenuView;
 }
@@ -519,6 +511,18 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     return nil;
 }
 
+- (NSString *)classicEmojiDirectory {
+	return self.emotionManagerView.classicEmojiDir;
+}
+
+- (NSString *)classicEmojiKeyValuePlistFile {
+	return self.plist4classicEmojiKeyValue;
+}
+
+- (NSString *)regexForClassicEmoji {
+	return self.regex4classicEmoji;
+}
+
 #pragma mark - Collection view data source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -554,15 +558,27 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     cell.delegate = collectionView;
 
     if (!isMediaMessage) {
-        cell.textView.text = [messageItem text];
+//        cell.textView.text = [messageItem text];
 
         if ([UIDevice jsq_isCurrentDeviceBeforeiOS8]) {
             //  workaround for iOS 7 textView data detectors bug
-            cell.textView.text = nil;
-            cell.textView.attributedText = [[NSAttributedString alloc] initWithString:[messageItem text]
-                                                                           attributes:@{ NSFontAttributeName : collectionView.collectionViewLayout.messageBubbleFont }];
+            cell.textView.text = [messageItem text];;
+			cell.textView.attributedText =
+				[[messageItem text] attributedStringForRegex:self.regex4classicEmoji
+											  emojiDirectory:self.emotionManagerView.classicEmojiDir
+										   emojiKeyValueFile:self.plist4classicEmojiKeyValue
+												  attributes:@{ NSFontAttributeName : collectionView.collectionViewLayout.messageBubbleFont }];
+//				[[NSAttributedString alloc] initWithString:[messageItem text]
+//														attributes:@{ NSFontAttributeName : collectionView.collectionViewLayout.messageBubbleFont }];
+			
         }
-
+		else {
+			cell.textView.text = [messageItem text];
+			cell.textView.attributedText = [[messageItem text] attributedStringForRegex:self.regex4classicEmoji
+										  emojiDirectory:self.emotionManagerView.classicEmojiDir
+									   emojiKeyValueFile:self.plist4classicEmojiKeyValue
+											  attributes:@{ NSFontAttributeName : collectionView.collectionViewLayout.messageBubbleFont }];
+		}
         NSParameterAssert(cell.textView.text != nil);
 
         id<JSQMessageBubbleImageDataSource> bubbleImageDataSource = [collectionView.dataSource collectionView:collectionView messageBubbleImageDataForItemAtIndexPath:indexPath];

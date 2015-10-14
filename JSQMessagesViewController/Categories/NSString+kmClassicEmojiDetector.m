@@ -8,6 +8,8 @@
 
 #import "NSString+kmClassicEmojiDetector.h"
 
+#import "kmEmojiCache.h"
+
 @implementation NSString (kmClassicEmojiDetector)
 
 
@@ -55,12 +57,70 @@
 			res = YES;
 			rloc = slen -1;
 		}
-		
 	}
 	*plocation = rloc;
 	return  res;
 }
 
+- (NSAttributedString *)attributedStringForRegex:(NSString *)regex
+								  emojiDirectory:(NSString *)emojiDirectory
+							   emojiKeyValueFile:(NSString *)emojiKeyValueFile  attributes:(NSDictionary<NSString *, id>*)attr {
+
+	if ([self length] == 0) {
+		return [[NSAttributedString alloc] init];
+	}
+	kmEmojiCache *cache = [kmEmojiCache shareEmojiCache];
+	NSAttributedString *attrStr = [cache objectForKey:self];
+	if (attrStr) {
+		return attrStr;
+	}
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self  attributes:attr];
+	
+	NSError *error = nil;
+	NSRegularExpression * re = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:&error];
+	
+	if (re) {
+		NSArray *resultArr = [re matchesInString:self options:0 range:NSMakeRange(0, self.length)];
+		NSString *emojiBundledir = [[NSBundle mainBundle] pathForResource:emojiDirectory ofType:nil];
+		NSString *emojiPath = [[emojiBundledir stringByAppendingPathComponent:emojiKeyValueFile] stringByAppendingPathExtension:@"plist"];
+		
+		NSDictionary *emojiDict = [NSDictionary dictionaryWithContentsOfFile:emojiPath];
+		NSArray *emojiKeys = [emojiDict allKeys];
+		
+		NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:resultArr.count];
+		
+		for (NSTextCheckingResult *amatch in resultArr) {
+			
+			NSRange mrange = [amatch range];
+			NSString *oneEmoji = [self substringWithRange:mrange];
+			
+			if ( [emojiKeys containsObject:oneEmoji] ) {
+				NSString *emfile = [emojiDict objectForKey:oneEmoji];
+				NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
+				textAttachment.bounds = CGRectMake(textAttachment.bounds.origin.x, textAttachment.bounds.origin.y - 5, 25, 25);
+				NSString *emojiImgPath = [emojiBundledir stringByAppendingPathComponent:emfile];
+				textAttachment.image = [UIImage imageNamed:emojiImgPath];
+				NSAttributedString *imageStr = [NSAttributedString attributedStringWithAttachment:textAttachment];
+				
+				NSMutableDictionary *imageDict = [NSMutableDictionary dictionaryWithCapacity:2];
+				[imageDict setObject:imageStr forKey:@"image"];
+				[imageDict setObject:[NSValue valueWithRange:mrange] forKey:@"range"];
+				
+				[imageArray addObject:imageDict];
+			}
+		}
+		
+		for (NSInteger ii = imageArray.count - 1; ii >= 0; ii --) {
+			NSDictionary *adict = [imageArray objectAtIndex:ii];
+			NSRange arange;
+			[[adict objectForKey:@"range"] getValue:&arange];
+			NSAttributedString *imageStr = [adict objectForKey:@"image"];
+			[attributedString replaceCharactersInRange:arange withAttributedString:imageStr];
+		}
+	}
+	[cache setObject:attributedString forKey:self];
+	return attributedString;
+}
 
 
 

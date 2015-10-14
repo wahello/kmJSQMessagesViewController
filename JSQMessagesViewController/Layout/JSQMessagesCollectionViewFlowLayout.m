@@ -449,6 +449,18 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     return CGSizeMake(self.itemWidth, ceilf(finalHeight));
 }
 
+//- (CGSize)messageBubbleSizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//							   emojiDirectory:(NSString *)emojiDirectory
+//							emojiKeyValueFile:(NSString *)keyValueFile {
+//	
+//}
+//
+//- (CGSize)sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//				  emojiDirectory:(NSString *)emojiDirectory
+//			   emojiKeyValueFile:(NSString *)keyValueFile {
+//	CGSize messageBubbleSize = [self. ];
+//}
+
 - (void)jsq_configureMessageCellLayoutAttributes:(JSQMessagesCollectionViewLayoutAttributes *)layoutAttributes
 {
     NSIndexPath *indexPath = layoutAttributes.indexPath;

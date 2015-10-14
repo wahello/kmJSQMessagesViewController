@@ -210,4 +210,13 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault;
  */
 - (CGSize)sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
 
+//- (CGSize)messageBubbleSizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//							   emojiDirectory:(NSString *)emojiDirectory
+//							emojiKeyValueFile:(NSString *)keyValueFile;
+//
+//- (CGSize)sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//				  emojiDirectory:(NSString *)emojiDirectory
+//			   emojiKeyValueFile:(NSString *)keyValueFile;
+
+
 @end

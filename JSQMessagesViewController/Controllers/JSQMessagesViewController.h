@@ -181,7 +181,6 @@
 
 
 @property (weak, nonatomic, readonly) kmMessageEmotionManagerView *emotionManagerView;
-//@property (weak, nonatomic, readonly) kmMessageMoreSelector *moreSelector;
 @property (weak, nonatomic, readonly) kmMoreMenuView *moMenuView;
 @property (weak, nonatomic, readonly) kmVoiceInput *voiceInput;
 

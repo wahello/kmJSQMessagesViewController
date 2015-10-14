@@ -152,4 +152,11 @@
  */
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath;
 
+
+- (NSString *)classicEmojiDirectory;
+
+- (NSString *)classicEmojiKeyValuePlistFile;
+
+- (NSString *)regexForClassicEmoji;
+
 @end
