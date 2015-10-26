@@ -91,6 +91,8 @@
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(customAction:)];
     [UIMenuController sharedMenuController].menuItems = @[ [[UIMenuItem alloc] initWithTitle:@"Custom Action"
                                                                                       action:@selector(customAction:)] ];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handle_menuDidHide:) name:UIMenuControllerDidHideMenuNotification object:nil];
 
     /**
      *  OPT-IN: allow cells to be deleted
@@ -125,6 +127,11 @@
 	
 }
 
+- (void)handle_menuDidHide:(NSNotification *)notification {
+	DLogLime(@" ======= ---22 %@", notification.object);
+	[UIMenuController sharedMenuController].menuItems = @[ [[UIMenuItem alloc] initWithTitle:@"保存" action:@selector(saveCell:)] ];
+}
+
 - (void)configureView {
 	
 	NSMutableArray *moreMenuItems = [NSMutableArray array];
@@ -157,7 +164,6 @@
 			self.emotionManagerView.classicEmojiDir = [cEmojibPath lastPathComponent];
 			self.plist4classicEmojiKeys = @"classicEmojiKeys";
 			self.plist4classicEmojiKeyValue = @"classicEmoji";
-			
 		}
 		else {
 			//TODO
