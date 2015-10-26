@@ -20,6 +20,8 @@
 
 #import "JSQMessageData.h"
 
+
+
 /**
  *  The `JSQMessage` class is a concrete class for message model objects that represents a single user message.
  *  The message can be a text message or media message, depending on how it is initialized.
@@ -63,6 +65,7 @@
  */
 @property (copy, nonatomic, readonly) id<JSQMessageMediaData> media;
 
+@property (assign, nonatomic, readonly) kmMessageMediaType mediaType;
 
 #pragma mark - Initialization
 

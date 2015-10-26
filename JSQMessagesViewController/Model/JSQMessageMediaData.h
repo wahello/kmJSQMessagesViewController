@@ -19,6 +19,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, kmMessageMediaType) {
+	kmMessageMediaTypeText = 0,
+	kmMessageMediaTypePhoto = 1,
+	kmMessageMediaTypeVideo = 2,
+	kmMessageMediaTypeLocation = 3,
+	kmMessageMediaTypeVoice = 4,
+	kmMessageMediaTypeFile = 5,
+	kmMessageMediaTypeTip = 7
+};
+
 /**
  *  The `JSQMessageMediaData` protocol defines the common interface through which
  *  a `JSQMessagesViewController` and `JSQMessagesCollectionView` interact with media message model objects.
@@ -77,5 +87,6 @@
  *  This value is used to cache layout information in the collection view.
  */
 - (NSUInteger)mediaHash;
+
 
 @end

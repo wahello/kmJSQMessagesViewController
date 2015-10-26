@@ -40,6 +40,8 @@
  */
 @property (assign, nonatomic) BOOL appliesMediaViewMaskAsOutgoing;
 
+@property (assign, nonatomic) kmMessageMediaType mediaType;
+
 /**
  *  Initializes and returns a media item with the specified value for maskAsOutgoing.
  *

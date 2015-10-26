@@ -20,6 +20,8 @@
 
 #import "JSQMessageMediaData.h"
 
+
+
 /**
  *  The `JSQMessageData` protocol defines the common interface through which 
  *  a `JSQMessagesViewController` and `JSQMessagesCollectionView` interact with message model objects.
@@ -81,6 +83,9 @@
  */
 - (NSUInteger)messageHash;
 
+
+-  (kmMessageMediaType)mediaType;
+
 @optional
 
 /**
@@ -96,5 +101,7 @@
  *  @warning You must not return `nil` from this method.
  */
 - (id<JSQMessageMediaData>)media;
+
+
 
 @end
